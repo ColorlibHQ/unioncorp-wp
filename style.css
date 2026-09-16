@@ -107,6 +107,16 @@ Source: https://unsplash.com/
 	padding-bottom: var(--wp--preset--spacing--70);
 }
 
+/*
+ * The contact map is an <iframe>, which is inline. A constrained layout caps
+ * its children at the content width and centres them with auto margins, and
+ * auto margins do not centre an inline box: the map took the width and sat
+ * flush left, out of line with the form above it. As a block it centres.
+ */
+.unioncorp-map {
+	display: block;
+}
+
 /* ==========================================================================
    Header
    ========================================================================== */
