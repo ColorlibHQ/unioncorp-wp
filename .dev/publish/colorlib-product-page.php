@@ -165,9 +165,11 @@ $faqs = array(
 
 $toggles = '';
 foreach ( $faqs as $i => $faq ) {
-	// vcex_toggle takes `heading`. With `title` every toggle renders the
-	// shortcode's own placeholder, "Lorem ipsum dolor sit amet?".
-	$toggles .= '[vcex_toggle heading="' . esc_attr( $faq[0] ) . '" heading_type="h3" css=".vc_custom_uc_q' . $i . '{margin-bottom:10px !important;}"]'
+	// vcex_toggle takes `heading`: with `title` every toggle renders the
+	// shortcode's placeholder, "Lorem ipsum dolor sit amet?". It is styled by its
+	// own attributes, not a css= class (which it ignores): `style="boxed"` and
+	// the padding are what give the grey panels Academia's page has.
+	$toggles .= '[vcex_toggle heading="' . esc_attr( $faq[0] ) . '" heading_type="h3" heading_font_size="17px" style="boxed" padding_y="16px" padding_x="20px" bottom_margin="12px"]'
 		. $faq[1] . '[/vcex_toggle]';
 }
 
@@ -191,7 +193,7 @@ foreach ( $specs as $label => $value ) {
 		. esc_html( $label ) . '</th><td style="padding:10px 0;border-bottom:1px solid #e3e8f2;">' . $value . '</td></tr>';
 }
 
-$buttons = '[vc_btn title="Download Unioncorp" style="flat" color="blue" link="url:{$download_enc}|title:Download%20Unioncorp|target:_blank" css=".vc_custom_uc{N}a{{$btn_css}}" i_icon_fontawesome="fa fa-download" add_icon="true"]'
+$buttons = '[vc_btn title="Download Unioncorp" style="flat" color="green" link="url:{$download_enc}|title:Download%20Unioncorp|target:_blank" css=".vc_custom_uc{N}a{{$btn_css}}" i_icon_fontawesome="fa fa-download" add_icon="true"]'
 	. '[vc_btn title="Live demo" style="flat" color="grey" link="url:{$demo_enc}|title:Live%20demo|target:_blank" css=".vc_custom_uc{N}b{{$btn_css}}" i_icon_fontawesome="fa fa-eye" add_icon="true"]';
 $buttons = str_replace( array( '{$download_enc}', '{$demo_enc}', '{$btn_css}' ), array( $download_enc, $demo_enc, $btn_css ), $buttons );
 $top_buttons    = str_replace( '{N}', '004', $buttons );
@@ -288,6 +290,14 @@ if ( is_wp_error( $result ) ) {
 
 set_post_thumbnail( $page_id, $img['card'] );
 
+// The full-width template and WPBakery's own flag, as Academia and Pato have.
+// Without the template the page renders in the default layout's narrow column
+// beside an empty sidebar.
+update_post_meta( $page_id, '_wp_page_template', 'templates/no-sidebar.php' );
+update_post_meta( $page_id, '_wpb_vc_js_status', 'true' );
+update_post_meta( $page_id, '_yoast_wpseo_title', 'Unioncorp – Free Finance & Consulting WordPress Theme - %%sitename%%' );
+update_post_meta( $page_id, '_yoast_wpseo_metadesc', 'A free WordPress block theme for financial advisers and consultancies, with an enquiry form built in, eight colour palettes and dark mode.' );
+
 // WPBakery keeps every css="…" rule in _wpb_shortcodes_custom_css and only
 // regenerates it when the page is saved through the builder UI. Updating
 // post_content programmatically leaves that meta stale, so every css= edit
@@ -306,7 +316,8 @@ echo 'page: ' . $page_id . ' (' . get_post_status( $page_id ) . '), parent ' . w
 echo 'images: ' . wp_json_encode( $img ) . "\n";
 echo 'length: ' . strlen( $saved ) . "\n";
 echo 'icon boxes: ' . substr_count( $saved, '[vcex_icon_box' ) . "\n";
-echo 'toggles: ' . substr_count( $saved, '[vcex_toggle' ) . ' (with heading=: ' . substr_count( $saved, '[vcex_toggle heading=' ) . ")\n";
+echo 'toggles: ' . substr_count( $saved, '[vcex_toggle' ) . ' (with heading=: ' . substr_count( $saved, '[vcex_toggle heading=' ) . ', boxed: ' . substr_count( $saved, 'style="boxed"' ) . ")\n";
+echo 'template: ' . get_post_meta( $page_id, '_wp_page_template', true ) . ', vc_js: ' . get_post_meta( $page_id, '_wpb_vc_js_status', true ) . "\n";
 echo 'section images: ' . substr_count( $saved, '[vcex_image' ) . "\n";
 echo 'buttons: ' . substr_count( $saved, '[vc_btn' ) . "\n";
 echo 'unbalanced rows: ' . ( substr_count( $saved, '[vc_row' ) - substr_count( $saved, '[/vc_row]' ) ) . "\n";
