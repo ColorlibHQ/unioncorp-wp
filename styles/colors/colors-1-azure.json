@@ -59,6 +59,16 @@
 					"name": "Overlay",
 					"slug": "overlay",
 					"color": "#ffffff"
+				},
+				{
+					"name": "On dark",
+					"slug": "on-dark",
+					"color": "#c9d6e6"
+				},
+				{
+					"name": "On primary",
+					"slug": "on-primary",
+					"color": "#ffffff"
 				}
 			]
 		}

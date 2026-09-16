@@ -5,8 +5,8 @@
 		"appearanceTools": true,
 		"useRootPaddingAwareAlignments": true,
 		"layout": {
-			"contentSize": "760px",
-			"wideSize": "1200px"
+			"contentSize": "1140px",
+			"wideSize": "1320px"
 		},
 		"color": {
 			"custom": true,
@@ -66,6 +66,16 @@
 				{
 					"name": "Overlay",
 					"slug": "overlay",
+					"color": "#ffffff"
+				},
+				{
+					"name": "On dark",
+					"slug": "on-dark",
+					"color": "#c9d6e6"
+				},
+				{
+					"name": "On primary",
+					"slug": "on-primary",
 					"color": "#ffffff"
 				}
 			]

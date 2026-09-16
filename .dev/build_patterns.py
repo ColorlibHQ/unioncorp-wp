@@ -52,9 +52,14 @@ def write(slug, title, content, categories=None, keywords=None,
     WRITTEN.append(slug)
 
 
-def eyebrow(text, align="center"):
-    """The small caps line above a section title, as the template draws it."""
-    return paragraph(text, align=align, color="primary", size="small",
+def eyebrow(text, align="center", color="primary"):
+    """The small caps line above a section title, as the template draws it.
+
+    The colour is a parameter because this line also appears on the primary
+    band, where `primary` text on a `primary` ground is 1:1 — invisible, and
+    measured as such by .dev/contrast-rendered.mjs.
+    """
+    return paragraph(text, align=align, color=color, size="small",
                      extra_class="unioncorp-eyebrow")
 
 
@@ -160,13 +165,13 @@ def build_footer():
     col_brand = column("\n".join([
         '<!-- wp:site-title {"level":0,"style":{"color":{"text":"var(--wp--preset--color--overlay)"}}} /-->',
         paragraph("Financial planning and consulting for businesses and the people who run them.",
-                  color="muted", size="small"),
+                  color="on-dark", size="small"),
     ]))
     col_contact = column("\n".join([
         heading("Have a question?", level=3, color="overlay", size="large"),
-        paragraph("203 Fake St. Mountain View, San Francisco, California, USA", color="muted", size="small"),
-        paragraph("+2 392 3929 210", color="muted", size="small"),
-        paragraph("info@yourdomain.com", color="muted", size="small"),
+        paragraph("203 Fake St. Mountain View, San Francisco, California, USA", color="on-dark", size="small"),
+        paragraph("+2 392 3929 210", color="on-dark", size="small"),
+        paragraph("info@yourdomain.com", color="on-dark", size="small"),
     ]))
     col_posts = column("\n".join([
         heading("Recent posts", level=3, color="overlay", size="large"),
@@ -178,7 +183,7 @@ def build_footer():
     )
     legal = group(
         paragraph('Copyright © <a href="https://colorlib.com" rel="nofollow">Colorlib</a>. All rights reserved.',
-                  align="center", color="muted", size="small"),
+                  align="center", color="on-dark", size="small"),
         align="full", background="dark", padding_y="30", layout="constrained",
     )
     write("footer", "Footer", body + "\n" + legal, keywords=["footer"],
@@ -362,13 +367,13 @@ def build_blog_latest():
 def build_cta():
     inner = columns([
         column(group("\n".join([
-            eyebrow("Prepare for takeoff", align="left"),
-            heading("Looking for a business opportunity?", level=2, align="left", color="overlay"),
+            eyebrow("Prepare for takeoff", align="left", color="on-primary"),
+            heading("Looking for a business opportunity?", level=2, align="left", color="on-primary"),
         ]), layout="constrained", gap="20"), width="70%", vertical="center"),
         column(buttons([button("Get started", "#")], align="right"), width="30%", vertical="center"),
     ], gap="40", vertical="center")
     write("cta", "Call to action band",
-          group(inner, align="full", background="primary", text="overlay", padding_y="60", layout="constrained"),
+          group(inner, align="full", background="primary", text="on-primary", padding_y="60", layout="constrained"),
           categories=SECTIONS, keywords=["cta", "call to action"],
           description="A full-width band with a headline and a button.")
 

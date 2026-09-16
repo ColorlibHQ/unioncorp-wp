@@ -81,12 +81,26 @@ function unioncorp_create_front_page() {
 		return;
 	}
 
-	update_option( UNIONCORP_SETUP_FLAG, true );
+	// Only on a site that has not been built yet: someone activating Unioncorp
+	// over an existing site wants their pages left alone. WordPress's own two
+	// pages do not count as "built" — a brand new install has them.
+	$existing = get_posts(
+		array(
+			'post_type'      => 'page',
+			'post_status'    => array( 'publish', 'draft', 'pending', 'private' ),
+			'posts_per_page' => 5,
+			'fields'         => 'ids',
+			'exclude'        => array_filter(
+				array(
+					(int) get_option( 'wp_page_for_privacy_policy' ),
+					(int) ( get_page_by_path( 'sample-page' )->ID ?? 0 ),
+				)
+			),
+		)
+	);
 
-	// Only on a site that has not been built yet. Someone activating Unioncorp on
-	// an existing restaurant site wants their pages left alone.
-	$existing = get_pages( array( 'number' => 2 ) );
 	if ( count( $existing ) > 1 ) {
+		update_option( UNIONCORP_SETUP_FLAG, 'skipped: site already had pages', false );
 		return;
 	}
 
@@ -135,8 +149,34 @@ function unioncorp_create_front_page() {
 	}
 
 	unioncorp_create_primary_menu( $created );
+
+	// Claimed only now, and only if something was actually built. Firing before
+	// the pattern registry is ready is a real possibility — the content comes
+	// back empty and every page is skipped — and a flag set up front would make
+	// that one bad moment permanent. Left unset, the admin_init retry below
+	// finishes the job on the next page load.
+	if ( $created ) {
+		update_option( UNIONCORP_SETUP_FLAG, gmdate( 'c' ), false );
+	}
 }
 add_action( 'after_switch_theme', 'unioncorp_create_front_page' );
+
+/**
+ * Second chance.
+ *
+ * after_switch_theme can fire before the block pattern registry is populated,
+ * in which case every page resolves to empty content and nothing is built. This
+ * runs once more on the first admin request, by which time patterns are
+ * certainly registered, and does nothing at all once the flag is set.
+ */
+function unioncorp_create_front_page_retry() {
+	if ( get_option( UNIONCORP_SETUP_FLAG ) || ! current_user_can( 'edit_theme_options' ) ) {
+		return;
+	}
+
+	unioncorp_create_front_page();
+}
+add_action( 'admin_init', 'unioncorp_create_front_page_retry' );
 
 /**
  * The markup of a registered pattern, with nested pattern references expanded.

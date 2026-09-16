@@ -67,3 +67,19 @@ Source: https://unsplash.com/
 .flaticon-insurance::before { content: "\f108"; }
 .flaticon-retirement-plan::before { content: "\f109"; }
 .flaticon-technology::before { content: "\f10a"; }
+
+/*
+ * Links on the dark ground. The palette's `primary` is chosen to be readable on
+ * the page background, which makes it 2.64:1 against the footer's navy — so the
+ * footer states its own link colour rather than inheriting one that fails.
+ */
+.wp-block-group.has-dark-background-color a,
+.wp-block-cover.has-dark-background-color a {
+	color: var(--wp--preset--color--overlay);
+	text-underline-offset: 0.2em;
+}
+
+.wp-block-group.has-dark-background-color a:hover,
+.wp-block-cover.has-dark-background-color a:hover {
+	color: var(--wp--preset--color--divider);
+}

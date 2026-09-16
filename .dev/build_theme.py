@@ -42,6 +42,13 @@ PALETTE = [
     ("Dark",         "dark",         "#052c43"),   # the template's own $darken
     ("Divider",      "divider",      "#dbe3ef"),
     ("Overlay",      "overlay",      "#ffffff"),
+    # Text on the dark ground, and text on the primary band. Both exist because
+    # a pattern has to name one colour that works in every palette: `muted`
+    # measured 2.49:1 on the footer's navy, and in the dark palettes `primary`
+    # is a LIGHT blue, so white on it is 2.20:1. Neither is a value a section
+    # can hardcode.
+    ("On dark",      "on-dark",      "#c9d6e6"),
+    ("On primary",   "on-primary",   "#ffffff"),
 ]
 
 COLOR_SETS = {
@@ -49,31 +56,37 @@ COLOR_SETS = {
         "base": "#ffffff", "surface": "#f9faff", "contrast": "#0b2033", "muted": "#55677a",
         "primary": "#2c62d6", "primary-deep": "#1f4aa8", "accent": "#4f86f9",
         "success": "#1f9d5b", "dark": "#052c43", "divider": "#dbe3ef", "overlay": "#ffffff",
+            "on-dark": "#c9d6e6", "on-primary": "#ffffff",
     }),
     "colors-2-emerald": ("Emerald", {
         "base": "#ffffff", "surface": "#f5fbf7", "contrast": "#0a2418", "muted": "#4f6659",
         "primary": "#127a4b", "primary-deep": "#0c5c38", "accent": "#3bd381",
         "success": "#127a4b", "dark": "#06301f", "divider": "#d5e8dd", "overlay": "#ffffff",
+            "on-dark": "#cde3d7", "on-primary": "#ffffff",
     }),
     "colors-3-navy": ("Navy", {
         "base": "#ffffff", "surface": "#f6f8fb", "contrast": "#0a1b2e", "muted": "#51637a",
         "primary": "#1b4f8f", "primary-deep": "#12396b", "accent": "#3f7fd4",
         "success": "#1f7a52", "dark": "#04182b", "divider": "#d9e1ec", "overlay": "#ffffff",
+            "on-dark": "#ccd8e6", "on-primary": "#ffffff",
     }),
     "colors-4-slate": ("Slate", {
         "base": "#ffffff", "surface": "#f7f8f9", "contrast": "#16191d", "muted": "#5a6068",
         "primary": "#3a4750", "primary-deep": "#262f36", "accent": "#6b7c8c",
         "success": "#1f7a52", "dark": "#12161a", "divider": "#dfe2e6", "overlay": "#ffffff",
+            "on-dark": "#d2d7dc", "on-primary": "#ffffff",
     }),
     "colors-5-teal": ("Teal", {
         "base": "#ffffff", "surface": "#f4fafb", "contrast": "#07242a", "muted": "#4d6970",
         "primary": "#0f6f7f", "primary-deep": "#0a5460", "accent": "#26a5b8",
         "success": "#1f8a5b", "dark": "#04252c", "divider": "#d3e7ea", "overlay": "#ffffff",
+            "on-dark": "#c7dee2", "on-primary": "#ffffff",
     }),
     "colors-6-plum": ("Plum", {
         "base": "#ffffff", "surface": "#faf6fb", "contrast": "#24122b", "muted": "#66546e",
         "primary": "#7b2d8e", "primary-deep": "#5d1f6c", "accent": "#a855bd",
         "success": "#1f8a5b", "dark": "#1d0f23", "divider": "#e7d9ec", "overlay": "#ffffff",
+            "on-dark": "#ddd0e3", "on-primary": "#ffffff",
     }),
     # Dark palettes: `base` is the page, so it is dark here. A button is
     # bright-on-dark, which means its label is the DARK colour — the opposite of
@@ -82,11 +95,13 @@ COLOR_SETS = {
         "base": "#0d1622", "surface": "#142033", "contrast": "#eef3f9", "muted": "#a3b1c2",
         "primary": "#7fb0ff", "primary-deep": "#a8c9ff", "accent": "#4f86f9",
         "success": "#57d693", "dark": "#080f18", "divider": "#24334a", "overlay": "#ffffff",
+            "on-dark": "#a3b1c2", "on-primary": "#080f18",
     }),
     "colors-8-graphite": ("Graphite", {
         "base": "#141618", "surface": "#1d2124", "contrast": "#f1f3f4", "muted": "#a8aeb4",
         "primary": "#9fb6c6", "primary-deep": "#c3d3de", "accent": "#7f97a8",
         "success": "#5fd19a", "dark": "#0e1011", "divider": "#2c3236", "overlay": "#ffffff",
+            "on-dark": "#a8aeb4", "on-primary": "#0e1011",
     }),
 }
 
@@ -143,6 +158,11 @@ CONTRAST_CHECKS = [
     ("primary", "base"), ("primary", "surface"),
     ("primary-deep", "base"),
     ("overlay", "dark"),
+    # The footer sets body text and links on the dark ground. `muted` measured
+    # 2.49:1 there and `primary` 2.64:1, so both are named here to stop a future
+    # palette reintroducing them.
+    ("on-dark", "dark"),
+    ("on-primary", "primary"),
 ]
 
 
@@ -224,7 +244,12 @@ def build_settings():
     return od(
         ("appearanceTools", True),
         ("useRootPaddingAwareAlignments", True),
-        ("layout", od(("contentSize", "760px"), ("wideSize", "1200px"))),
+        # The template is a Bootstrap layout: its container is 1140px at desktop and
+        # 1320px on a wide screen. A 760px content width squeezed the hero, the
+        # service cards and every columns block into something visibly narrower
+        # than the design it comes from. Prose that wants a shorter measure asks
+        # for it per section instead.
+        ("layout", od(("contentSize", "1140px"), ("wideSize", "1320px"))),
         ("color", od(("custom", True), ("defaultPalette", False), ("defaultGradients", False),
                      ("palette", palette(COLOR_SETS["colors-1-azure"][1])))),
         ("typography", od(

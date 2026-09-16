@@ -16,8 +16,8 @@ defined( 'ABSPATH' ) || exit;
 <div class="wp-block-columns"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:site-title {"level":0,"style":{"color":{"text":"var(\u002d\u002dwp\u002d\u002dpreset\u002d\u002dcolor\u002d\u002doverlay)"}}} /-->
 
-<!-- wp:paragraph {"textColor":"muted","fontSize":"small"} -->
-<p class="has-muted-color has-text-color has-small-font-size">Financial planning and consulting for businesses and the people who run them.</p>
+<!-- wp:paragraph {"textColor":"on-dark","fontSize":"small"} -->
+<p class="has-on-dark-color has-text-color has-small-font-size">Financial planning and consulting for businesses and the people who run them.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column -->
 
@@ -58,23 +58,23 @@ defined( 'ABSPATH' ) || exit;
 <h3 class="wp-block-heading has-overlay-color has-text-color has-large-font-size">Have a question?</h3>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"textColor":"muted","fontSize":"small"} -->
-<p class="has-muted-color has-text-color has-small-font-size">203 Fake St. Mountain View, San Francisco, California, USA</p>
+<!-- wp:paragraph {"textColor":"on-dark","fontSize":"small"} -->
+<p class="has-on-dark-color has-text-color has-small-font-size">203 Fake St. Mountain View, San Francisco, California, USA</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"textColor":"muted","fontSize":"small"} -->
-<p class="has-muted-color has-text-color has-small-font-size">+2 392 3929 210</p>
+<!-- wp:paragraph {"textColor":"on-dark","fontSize":"small"} -->
+<p class="has-on-dark-color has-text-color has-small-font-size">+2 392 3929 210</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"textColor":"muted","fontSize":"small"} -->
-<p class="has-muted-color has-text-color has-small-font-size">info@yourdomain.com</p>
+<!-- wp:paragraph {"textColor":"on-dark","fontSize":"small"} -->
+<p class="has-on-dark-color has-text-color has-small-font-size">info@yourdomain.com</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div>
 <!-- /wp:group -->
 
 <!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}}},"backgroundColor":"dark","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull has-dark-background-color has-background" style="padding-top:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--30)"><!-- wp:paragraph {"style":{"typography":{"textAlign":"center"}},"textColor":"muted","fontSize":"small"} -->
-<p class="has-text-align-center has-muted-color has-text-color has-small-font-size">Copyright © <a href="https://colorlib.com" rel="nofollow">Colorlib</a>. All rights reserved.</p>
+<div class="wp-block-group alignfull has-dark-background-color has-background" style="padding-top:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--30)"><!-- wp:paragraph {"style":{"typography":{"textAlign":"center"}},"textColor":"on-dark","fontSize":"small"} -->
+<p class="has-text-align-center has-on-dark-color has-text-color has-small-font-size">Copyright © <a href="https://colorlib.com" rel="nofollow">Colorlib</a>. All rights reserved.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->

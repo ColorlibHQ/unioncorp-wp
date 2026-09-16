@@ -1,0 +1,9 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "preferredVersions": { "php": "8.3", "wp": "latest" },
+  "steps": [
+    { "step": "setSiteOptions", "options": { "blogname": "Unioncorp", "blogdescription": "Finance & consultation" } },
+    { "step": "activateTheme", "themeFolderName": "unioncorp" },
+    { "step": "login", "username": "admin", "password": "password" }
+  ]
+}
