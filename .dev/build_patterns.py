@@ -11,6 +11,7 @@ Every pattern file is committed as generated. Edit this file, never
 patterns/*.php.
 """
 
+import json
 import os
 import sys
 
@@ -18,7 +19,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from patternlib import (  # noqa: E402
     button, buttons, column, columns, cover, group, heading, image,
-    paragraph, shortcode, spacer,
+    paragraph, shortcode, sp, spacer,
 )
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -52,6 +53,46 @@ def write(slug, title, content, categories=None, keywords=None,
     WRITTEN.append(slug)
 
 
+def icon(name):
+    """A decorative Tabler icon. style.css draws it as a mask filled with the
+    text colour, so it follows the palette and dark mode. Every name used here
+    needs a `.unioncorp-icon--<name>` rule; .dev/dead-selectors.py checks it."""
+    return '<span class="unioncorp-icon unioncorp-icon--%s" aria-hidden="true"></span>' % name
+
+
+def flex_row(inner, justify=None, gap=None, wrap="wrap", vertical="center"):
+    """A horizontal group.
+
+    Written directly because patternlib's group() has no vertical alignment.
+    normalize-blocks.mjs rewrites it into exactly what core's save() produces.
+    """
+    layout = {"type": "flex", "flexWrap": wrap}
+    if justify:
+        layout["justifyContent"] = justify
+    if vertical:
+        layout["verticalAlignment"] = vertical
+    data = {"layout": layout}
+    if gap:
+        data["style"] = {"spacing": {"blockGap": sp(gap)}}
+    return '<!-- wp:group %s -->\n<div class="wp-block-group">\n%s\n</div>\n<!-- /wp:group -->' % (
+        json.dumps(data, separators=(",", ":")), inner
+    )
+
+
+def social_links():
+    return (
+        '<!-- wp:social-links {"iconColor":"overlay","iconColorValue":"#ffffff","size":"has-small-icon-size",'
+        '"className":"is-style-logos-only","layout":{"type":"flex","justifyContent":"right","flexWrap":"nowrap"}} -->\n'
+        '<ul class="wp-block-social-links has-small-icon-size has-icon-color is-style-logos-only">'
+        '<!-- wp:social-link {"url":"#","service":"x"} /-->'
+        '<!-- wp:social-link {"url":"#","service":"facebook"} /-->'
+        '<!-- wp:social-link {"url":"#","service":"instagram"} /-->'
+        '<!-- wp:social-link {"url":"#","service":"linkedin"} /-->'
+        '</ul>\n'
+        '<!-- /wp:social-links -->'
+    )
+
+
 def eyebrow(text, align="center", color="primary"):
     """The small caps line above a section title, as the template draws it.
 
@@ -67,14 +108,24 @@ def section_head(label, title, blurb=None, align="center"):
     parts = [eyebrow(label, align), heading(title, level=2, align=align)]
     if blurb:
         parts.append(paragraph(blurb, align=align, color="muted", size="large"))
-    return group("\n".join(parts), layout="constrained", content_size="760px", gap="30")
+    # assets/js/interactions.js reveals a section head as one piece.
+    return group("\n".join(parts), layout="constrained", content_size="760px", gap="30",
+                 extra_class="unioncorp-section-head")
 
 
-def icon_card(icon, title, blurb):
-    """One service card: Flaticon glyph, heading, one line of copy."""
+def icon_tile(name):
+    """The rounded tile an icon sits in at the top of a card.
+
+    No colour attribute, deliberately: a palette colour class is `!important`,
+    and the tile has to change colour when its card is hovered.
+    """
+    return paragraph(icon(name), extra_class="unioncorp-card__icon")
+
+
+def icon_card(icon_name, title, blurb):
+    """One service card: icon tile, heading, one line of copy."""
     inner = "\n".join([
-        paragraph('<span class="flaticon-%s"></span>' % icon, color="primary",
-                  size="x-large", extra_class="unioncorp-card__icon"),
+        icon_tile(icon_name),
         heading(title, level=3, size="large"),
         paragraph(blurb, color="muted"),
     ])
@@ -82,9 +133,26 @@ def icon_card(icon, title, blurb):
                         background="base", style="unioncorp-card", radius="8px"))
 
 
+def feature_card(icon_name, title, blurb, highlight=False):
+    """A card for the About section. The design sets one of the four on the
+    primary ground; its words then use `on-primary`, the one text colour the
+    audit guarantees there in every palette and in dark mode."""
+    inner = "\n".join([
+        icon_tile(icon_name),
+        heading(title, level=3, size="large", color="on-primary" if highlight else None),
+        paragraph(blurb, color="on-primary" if highlight else "muted", size="small"),
+    ])
+    return column(group(inner, layout="constrained", gap="20",
+                        padding={"top": "40", "bottom": "40", "left": "30", "right": "30"},
+                        background="primary" if highlight else "base",
+                        style="unioncorp-card", radius="8px"))
+
+
 def stat(number, label):
     inner = "\n".join([
-        heading(number, level=3, align="center", color="overlay", size="display"),
+        # assets/js/interactions.js counts this figure up from zero.
+        heading(number, level=3, align="center", color="overlay", size="display",
+                extra_class="unioncorp-count"),
         paragraph(label, align="center", color="overlay", size="small"),
     ])
     return column(group(inner, layout="constrained", gap="20"))
@@ -99,12 +167,20 @@ def person(slug, name, role):
     return column(group(inner, layout="constrained", gap="20"))
 
 
-def quote(text, name, role):
-    inner = "\n".join([
-        paragraph(text, color="contrast"),
+def quote(text, name, role, avatar):
+    """A testimonial card as the design draws it: a quotation mark, the words,
+    then a photograph beside the name. The photograph's alt text is empty
+    because the name next to it already says who it is."""
+    author = flex_row("\n".join([
+        image(avatar, "", ratio="1/1", rounded="50%", width="56px"),
         paragraph("<strong>%s</strong><br>%s" % (name, role), color="muted", size="small"),
+    ]), gap="30", wrap="nowrap")
+    inner = "\n".join([
+        icon_tile("quote"),
+        paragraph(text, color="contrast"),
+        author,
     ])
-    return column(group(inner, layout="constrained", gap="20", background="base",
+    return column(group(inner, layout="constrained", gap="30", background="base",
                         padding={"top": "40", "bottom": "40", "left": "40", "right": "40"},
                         style="unioncorp-card", radius="8px"))
 
@@ -131,27 +207,38 @@ def plan(name, price, features, featured=False):
 # Parts
 # ---------------------------------------------------------------------------
 def build_header():
+    # The switch needs text inside it: an empty core/button renders nothing at
+    # all. The label is for screen readers; inc/scheme.php adds the pressed state.
+    toggle = buttons([button('<span class="screen-reader-text">Switch between light and dark mode</span>', "#",
+                             extra_class="unioncorp-scheme-toggle")], align="right")
     top = group(
         columns([
-            column(paragraph('<span class="flaticon-accountant"></span> Monday – Friday 8:00AM–8:00PM',
-                             color="overlay", size="small"), width="60%"),
-            column(paragraph('info@yourdomain.com', color="overlay", size="small"), width="40%"),
-        ], gap="30"),
+            column(flex_row("\n".join([
+                paragraph(icon("phone") + " +2 392 3929 210", color="overlay", size="small"),
+                paragraph(icon("clock") + " Monday – Friday 8:00AM–8:00PM", color="overlay", size="small"),
+            ]), gap="40"), width="65%", vertical="center"),
+            column(flex_row(social_links() + "\n" + toggle, justify="right", gap="30"),
+                   width="35%", vertical="center"),
+        ], gap="30", vertical="center"),
         align="full", background="dark", padding_y="20", layout="constrained",
         extra_class="unioncorp-topbar",
     )
+    # A flex row, not fixed-width columns. The columns were 30/50/20% of a
+    # container capped at 1140px, so the navigation always had 554px for links
+    # that need 563 and "Contact" wrapped to a second line at every desktop width.
+    brand = flex_row('<!-- wp:site-logo {"width":180} /-->\n<!-- wp:site-title {"level":0} /-->',
+                     gap="30", wrap="nowrap")
+    actions = flex_row("\n".join([
+        '<!-- wp:navigation {"overlayMenu":"mobile","layout":{"type":"flex","justifyContent":"right","flexWrap":"nowrap"}} /-->',
+        buttons([button("Get started", "#")], align="right"),
+    ]), justify="right", gap="40", wrap="nowrap")
     nav = group(
-        columns([
-            column('<!-- wp:site-logo {"width":180} /-->\n<!-- wp:site-title {"level":0} /-->', width="30%", vertical="center"),
-            column('<!-- wp:navigation {"overlayMenu":"mobile","layout":{"type":"flex","justifyContent":"right"}} /-->',
-                   width="50%", vertical="center"),
-            column(buttons([button("Get started", "#")], align="right"), width="20%", vertical="center"),
-        ], gap="30", vertical="center"),
+        flex_row(brand + "\n" + actions, justify="space-between", gap="40", wrap="nowrap"),
         align="full", background="base", padding_y="30", layout="constrained",
         extra_class="unioncorp-header",
     )
     write("header", "Header", top + "\n" + nav, keywords=["header", "navigation"],
-          description="Top bar with contact details, then the logo, navigation and a call to action.",
+          description="Top bar with contact details, social links and the dark mode switch, then the logo, navigation and a call to action.",
           block_types=["core/template-part/header"])
 
 
@@ -166,12 +253,16 @@ def build_footer():
         '<!-- wp:site-title {"level":0,"style":{"color":{"text":"var(--wp--preset--color--overlay)"}}} /-->',
         paragraph("Financial planning and consulting for businesses and the people who run them.",
                   color="on-dark", size="small"),
+        social_links(),
     ]))
     col_contact = column("\n".join([
         heading("Have a question?", level=3, color="overlay", size="large"),
-        paragraph("203 Fake St. Mountain View, San Francisco, California, USA", color="on-dark", size="small"),
-        paragraph("+2 392 3929 210", color="on-dark", size="small"),
-        paragraph("info@yourdomain.com", color="on-dark", size="small"),
+        paragraph(icon("map-pin") + "<span>203 Fake St. Mountain View, San Francisco, California, USA</span>",
+                  color="on-dark", size="small", extra_class="unioncorp-detail"),
+        paragraph(icon("phone") + "<span>+2 392 3929 210</span>",
+                  color="on-dark", size="small", extra_class="unioncorp-detail"),
+        paragraph(icon("mail") + "<span>info@yourdomain.com</span>",
+                  color="on-dark", size="small", extra_class="unioncorp-detail"),
     ]))
     col_posts = column("\n".join([
         heading("Recent posts", level=3, color="overlay", size="large"),
@@ -217,8 +308,10 @@ def build_hero():
         buttons([button("Get started", "#"), button("Our services", "#", style="unioncorp-ghost")],
                 align="center"),
     ])
+    # Dimmed 70, not 60: at 60 the small uppercase eyebrow measured 4.49:1 against
+    # the brightest tenth of the photograph behind it.
     write("hero", "Hero", cover(group(inner, layout="constrained", gap="30"), "bg_1",
-                                dim=60, min_height=70, min_height_unit="vh"),
+                                dim=70, min_height=70, min_height_unit="vh"),
           categories=SECTIONS, keywords=["hero", "banner"],
           description="Full-width opening banner with a headline and two buttons.")
 
@@ -233,6 +326,15 @@ def build_page_banner():
 
 
 def build_welcome():
+    # Four cards and an introduction, as the design lays the section out; the
+    # second card is the highlighted one.
+    cards = [
+        ("users", "Professional consultants", "Advisers who have run businesses, not only advised them.", False),
+        ("briefcase", "Comprehensive services", "Tax, investment, lending and risk, under one engagement.", True),
+        ("heart-handshake", "A culture that delivers", "The same people from the first meeting to the final report.", False),
+        ("award", "Industry experience", "Twenty-eight years across manufacturing, retail and services.", False),
+    ]
+    grid = "\n".join(columns([feature_card(*c) for c in cards[i:i + 2]], gap="30") for i in (0, 2))
     text = "\n".join([
         eyebrow("About Union Corporation", align="left"),
         heading("More than 40M+ trusted our financial &amp; consultation institution",
@@ -245,23 +347,23 @@ def build_welcome():
     ])
     write("welcome", "About: introduction",
           group(columns([
-              column(image("about", "Two advisers going over figures at a meeting table", ratio="4/3", rounded="8px"), width="50%"),
-              column(group(text, layout="constrained", gap="30"), width="50%", vertical="center"),
+              column(grid, width="55%"),
+              column(group(text, layout="constrained", gap="30"), width="45%", vertical="center"),
           ], gap="60", vertical="center"), align="full", padding_y="80", layout="constrained"),
           categories=SECTIONS, keywords=["about", "intro"],
-          description="A photograph beside an introduction and a button.")
+          description="Four feature cards beside an introduction and a button.")
 
 
 def build_services():
     cards = [
-        ("accounting", "Financial Planning", "A plan for the next five years that survives contact with the first one."),
-        ("financial", "Investments Management", "Portfolios built around what the business actually needs to do."),
-        ("recession", "Business Loan", "Lending arranged and negotiated, with the terms explained in plain words."),
-        ("tax", "Taxes Consulting", "Returns, planning and the correspondence nobody wants to open."),
-        ("insurance", "Insurance Consulting", "Cover that matches the risk, without the parts you will never claim."),
-        ("retirement-plan", "Retirement Planning", "Pensions and succession, for you and for the people who work for you."),
-        ("risk", "Risk Management", "Finding what would hurt most, then making it less likely."),
-        ("technology", "Technology Consulting", "The systems behind the numbers: what to buy, and what to retire."),
+        ("calculator", "Financial Planning", "A plan for the next five years that survives contact with the first one."),
+        ("chart-line", "Investments Management", "Portfolios built around what the business actually needs to do."),
+        ("building-bank", "Business Loan", "Lending arranged and negotiated, with the terms explained in plain words."),
+        ("receipt-tax", "Taxes Consulting", "Returns, planning and the correspondence nobody wants to open."),
+        ("shield-check", "Insurance Consulting", "Cover that matches the risk, without the parts you will never claim."),
+        ("pig-money", "Retirement Planning", "Pensions and succession, for you and for the people who work for you."),
+        ("alert-triangle", "Risk Management", "Finding what would hurt most, then making it less likely."),
+        ("device-desktop-analytics", "Technology Consulting", "The systems behind the numbers: what to buy, and what to retire."),
     ]
     rows = [columns([icon_card(*c) for c in cards[i:i + 4]], gap="40") for i in (0, 4)]
     inner = section_head("Our services", "Our exclusive services we offer for you",
@@ -274,29 +376,49 @@ def build_services():
 
 def build_quality():
     text = "\n".join([
-        eyebrow("Why us", align="left"),
+        # `overlay`, like the hero's: a `primary` eyebrow on this darkened
+        # photograph measured 2.27:1.
+        eyebrow("Why us", align="left", color="overlay"),
         heading("Quality makes the belief for customers", level=2, align="left", color="overlay"),
         paragraph("Advice you can check: every recommendation comes with the workings, the "
                   "assumptions and what would have to be true for it to be wrong.",
                   color="overlay"),
-        buttons([button("Read our case studies", "#", style="unioncorp-ghost")]),
+        # unioncorp-video: assets/js/interactions.js plays the video in a popup.
+        # Without JavaScript it is an ordinary link to the video.
+        buttons([button("Watch the video", "https://www.youtube.com/watch?v=9ZZ7pq331Dc",
+                        extra_class="unioncorp-video"),
+                 button("Read our case studies", "#", style="unioncorp-ghost")]),
     ])
     write("quality", "Why us: photograph and statement",
           cover(group(text, layout="constrained", content_size="620px", gap="30"), "image_5",
                 dim=70, min_height=48, min_height_unit="vh"),
-          categories=SECTIONS, keywords=["about", "quality"],
-          description="A statement over a photograph, with a button.")
+          categories=SECTIONS, keywords=["about", "quality", "video"],
+          description="A statement over a photograph, with a video and a button.")
 
 
 def build_case_studies():
-    shots = ["gallery-1", "gallery-2", "gallery-3", "gallery-4", "gallery-5", "gallery-6", "gallery-7", "gallery-8"]
-    rows = [columns([column(image(s, "Consulting work in progress", ratio="4/3", rounded="6px"))
-                     for s in shots[i:i + 4]], gap="30") for i in (0, 4)]
+    # Each photograph described from the picture itself. All eight used to share
+    # the alt text "Consulting work in progress".
+    shots = [
+        ("gallery-1", "Colleagues stacking their hands together over a desk in an office"),
+        ("gallery-2", "A consultant leaning over a colleague's shoulder while she writes"),
+        ("gallery-3", "A team gathered around laptops in a bright office"),
+        ("gallery-4", "A smiling woman with her arms folded in front of colleagues in conversation"),
+        ("gallery-5", "Two colleagues sitting side by side at a desk, looking over a document"),
+        ("gallery-6", "Hands pointing at charts and sticky notes on a glass wall"),
+        ("gallery-7", "A woman holding papers and smiling during a meeting across the table"),
+        ("gallery-8", "Three colleagues standing together, one holding a tablet"),
+    ]
+    # Core's own lightbox: enlarge on click, no script of the theme's, and an
+    # editor can turn it off per image.
+    rows = [columns([column(image(s, alt, ratio="4/3", rounded="6px", lightbox=True))
+                     for s, alt in shots[i:i + 4]], gap="30") for i in (0, 4)]
     inner = section_head("Case studies", "We take every case study very seriously") + "\n" + spacer("50") + "\n" + "\n".join(rows)
     write("case-studies", "Case studies: gallery",
-          group(inner, align="full", padding_y="80", layout="constrained", anchor="work"),
+          group(inner, align="full", padding_y="80", layout="constrained", anchor="work",
+                extra_class="unioncorp-gallery"),
           categories=SECTIONS, keywords=["gallery", "portfolio", "work"],
-          description="Eight photographs in two rows, for case studies or a portfolio.")
+          description="Eight photographs in two rows that enlarge on click, for case studies or a portfolio.")
 
 
 def build_counters():
@@ -305,34 +427,41 @@ def build_counters():
     write("counters", "Statistics",
           cover(columns([stat(n, l) for n, l in stats], gap="40"), "bg_4", dim=80, min_height=None),
           categories=SECTIONS, keywords=["statistics", "counters", "numbers"],
-          description="Four figures over a photograph.")
+          description="Four figures over a photograph, counting up as they come into view.")
 
 
 def build_team():
+    # Names follow the photographs. Three women's names had been given to men's
+    # photographs and a man's name to the only woman's, and those names are the
+    # images' alt text, so a screen reader described the wrong person.
     people = [("staff-1", "Jason Smith", "Managing partner"), ("staff-2", "Jeffrey Rockenson", "Head of investments"),
-              ("staff-3", "Maria Alvarez", "Tax director"), ("staff-4", "Peter Nowak", "Risk consultant"),
-              ("staff-5", "Hannah Byrne", "Financial planner"), ("staff-6", "Daniel Osei", "Technology consultant"),
-              ("staff-7", "Claire Dubois", "Insurance specialist"), ("staff-8", "Marcus Hale", "Investment analyst")]
+              ("staff-3", "Martin Alvarez", "Tax director"), ("staff-4", "Peter Nowak", "Risk consultant"),
+              ("staff-5", "Daniel Osei", "Technology consultant"), ("staff-6", "Hannah Byrne", "Financial planner"),
+              ("staff-7", "Colin Dubois", "Insurance specialist"), ("staff-8", "Marcus Hale", "Investment analyst")]
     rows = [columns([person(*p) for p in people[i:i + 4]], gap="40") for i in (0, 4)]
     inner = section_head("Our team", "The people you will actually speak to") + "\n" + spacer("50") + "\n" + "\n".join(rows)
-    write("team", "Team: six profiles",
-          group(inner, align="full", background="surface", padding_y="80", layout="constrained", anchor="team"),
+    # White, so it alternates with the photograph above and the grey testimonials
+    # below. Three sections in a row on one ground had no edge between them.
+    write("team", "Team: eight profiles",
+          group(inner, align="full", padding_y="80", layout="constrained", anchor="team",
+                extra_class="unioncorp-team"),
           categories=SECTIONS, keywords=["team", "staff", "people"],
-          description="Six team members with photographs and roles.")
+          description="Eight team members with photographs and roles.")
 
 
 def build_testimonials():
     quotes = [
         ("They found a tax position we had been missing for four years, and then explained it "
-         "in a way our board could follow.", "Roger Scott", "Managing director"),
-        ("The plan survived a bad year, which is the only test that matters.", "Alice Mensah", "Founder"),
-        ("Straight answers, including the ones we did not want.", "Tom Reilly", "Finance director"),
+         "in a way our board could follow.", "Roger Scott", "Managing director", "person_1"),
+        ("The plan survived a bad year, which is the only test that matters.", "Kwame Mensah", "Founder", "person_2"),
+        ("Straight answers, including the ones we did not want.", "Tom Reilly", "Finance director", "person_3"),
     ]
     inner = section_head("Testimonials", "What our customers say") + "\n" + spacer("50") + "\n" + columns([quote(*q) for q in quotes], gap="40")
+    # On `surface`: a white card on a white section had no edge at all.
     write("testimonials", "Testimonials: three quotes",
-          group(inner, align="full", padding_y="80", layout="constrained"),
+          group(inner, align="full", background="surface", padding_y="80", layout="constrained"),
           categories=SECTIONS, keywords=["testimonials", "reviews", "quotes"],
-          description="Three customer quotes in cards.")
+          description="Three customer quotes in cards, each with a photograph.")
 
 
 def build_pricing():
@@ -389,9 +518,12 @@ def build_contact():
     details = group("\n".join([
         heading("Contact us", level=2, align="left"),
         paragraph("We are open for questions, second opinions and new work.", color="muted"),
-        paragraph("<strong>Address</strong><br>198 West 21th Street, Suite 721, New York NY 10016", color="muted"),
-        paragraph("<strong>Email</strong><br>info@yourdomain.com", color="muted"),
-        paragraph("<strong>Phone</strong><br>+1 235 2355 98", color="muted"),
+        paragraph(icon("map-pin") + "<span><strong>Address</strong><br>198 West 21th Street, Suite 721, New York NY 10016</span>",
+                  color="muted", extra_class="unioncorp-detail"),
+        paragraph(icon("mail") + "<span><strong>Email</strong><br>info@yourdomain.com</span>",
+                  color="muted", extra_class="unioncorp-detail"),
+        paragraph(icon("phone") + "<span><strong>Phone</strong><br>+1 235 2355 98</span>",
+                  color="muted", extra_class="unioncorp-detail"),
     ]), layout="constrained", gap="30")
     form = group(shortcode("[unioncorp_enquiry_form]"), layout="constrained")
     map_block = (

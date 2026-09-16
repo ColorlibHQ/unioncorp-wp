@@ -23,16 +23,16 @@ defined( 'ABSPATH' ) || exit;
 <p class="has-muted-color has-text-color">We are open for questions, second opinions and new work.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"textColor":"muted"} -->
-<p class="has-muted-color has-text-color"><strong>Address</strong><br>198 West 21th Street, Suite 721, New York NY 10016</p>
+<!-- wp:paragraph {"className":"unioncorp-detail","textColor":"muted"} -->
+<p class="unioncorp-detail has-muted-color has-text-color"><span class="unioncorp-icon unioncorp-icon--map-pin" aria-hidden="true"></span><span><strong>Address</strong><br>198 West 21th Street, Suite 721, New York NY 10016</span></p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"textColor":"muted"} -->
-<p class="has-muted-color has-text-color"><strong>Email</strong><br>info@yourdomain.com</p>
+<!-- wp:paragraph {"className":"unioncorp-detail","textColor":"muted"} -->
+<p class="unioncorp-detail has-muted-color has-text-color"><span class="unioncorp-icon unioncorp-icon--mail" aria-hidden="true"></span><span><strong>Email</strong><br>info@yourdomain.com</span></p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"textColor":"muted"} -->
-<p class="has-muted-color has-text-color"><strong>Phone</strong><br>+1 235 2355 98</p>
+<!-- wp:paragraph {"className":"unioncorp-detail","textColor":"muted"} -->
+<p class="unioncorp-detail has-muted-color has-text-color"><span class="unioncorp-icon unioncorp-icon--phone" aria-hidden="true"></span><span><strong>Phone</strong><br>+1 235 2355 98</span></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->

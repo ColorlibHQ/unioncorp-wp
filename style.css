@@ -23,56 +23,601 @@ Poppins and Inter
 License: SIL Open Font License 1.1, https://openfontlicense.org/
 Source: https://fontsource.org/
 
+Tabler Icons
+License: MIT, https://github.com/tabler/tabler-icons/blob/main/LICENSE
+Source: https://tabler.io/icons
+
 Photographs
 License: Unsplash License, https://unsplash.com/license
 Source: https://unsplash.com/
 */
 
 /*
- * A block theme styles itself from theme.json. What lives here is only what
- * theme.json cannot express: the handful of component styles the design needs
- * and the block style variations registered in functions.php.
+ * A block theme styles itself from theme.json. What lives here is what
+ * theme.json cannot express: the component styles behind the block style
+ * variations registered in functions.php, the icons, the hover and scroll
+ * behaviour, and the handful of layout corrections a full-width design needs.
+ *
+ * This file is also the editor stylesheet (add_editor_style), so a card, a
+ * ghost button or an icon looks the same while it is being edited.
+ *
+ * Every colour is a palette variable. Nothing here is a literal, which is what
+ * lets all eight palettes, and dark mode, restyle every component.
  */
 
-/* Flaticon: the icon set the services and feature cards use. Only the woff2
-   ships; the eot/ttf/svg faces the original carried were for browsers this
-   theme does not support. */
-@font-face {
-	font-family: "Flaticon";
-	src: url("assets/fonts/flaticon/Flaticon.woff2") format("woff2");
-	font-weight: normal;
-	font-style: normal;
-	font-display: block;
+/* ==========================================================================
+   Screen reader text
+   ========================================================================== */
+
+.screen-reader-text {
+	border: 0;
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute !important;
+	width: 1px;
+	word-wrap: normal !important;
 }
 
-[class^="flaticon-"]::before,
-[class*=" flaticon-"]::before {
-	font-family: Flaticon;
-	font-style: normal;
-	font-weight: normal;
-	font-size: 1em;
-	line-height: 1;
-	speak: never;
-	-webkit-font-smoothing: antialiased;
+.screen-reader-text:focus {
+	background-color: var(--wp--preset--color--base);
+	clip-path: none;
+	color: var(--wp--preset--color--contrast);
+	display: block;
+	height: auto;
+	left: 6px;
+	padding: 15px 23px 14px;
+	top: 7px;
+	width: auto;
+	z-index: 100000;
 }
 
-.flaticon-research::before { content: "\f100"; }
-.flaticon-tax::before { content: "\f101"; }
-.flaticon-recession::before { content: "\f102"; }
-.flaticon-risk::before { content: "\f103"; }
-.flaticon-money::before { content: "\f104"; }
-.flaticon-accountant::before { content: "\f105"; }
-.flaticon-accounting::before { content: "\f106"; }
-.flaticon-financial::before { content: "\f107"; }
-.flaticon-insurance::before { content: "\f108"; }
-.flaticon-retirement-plan::before { content: "\f109"; }
-.flaticon-technology::before { content: "\f10a"; }
+/* ==========================================================================
+   Layout rhythm
+
+   WordPress separates the top-level pieces of a page — header, main, footer —
+   and every full-width section inside a page's content with the root block
+   gap. On a design built from coloured bands, that gap is a strip of bare page:
+   24px under the header, above the footer and between every pair of sections.
+   Sections carry their own padding, so they meet edge to edge instead.
+   ========================================================================== */
+
+.wp-site-blocks > * {
+	margin-block-start: 0;
+}
+
+.wp-block-post-content > .alignfull + .alignfull {
+	margin-block-start: 0;
+}
 
 /*
- * Links on the dark ground. The palette's `primary` is chosen to be readable on
- * the page background, which makes it 2.64:1 against the footer's navy — so the
- * footer states its own link colour rather than inheriting one that fails.
+ * A page built from sections needs no padding of its own — each section has
+ * it, and the template's padding stacked on top of it was the blank band under
+ * every banner. A page of ordinary paragraphs still needs room to breathe. So
+ * the page templates pad their content only where it does not start or end
+ * with a full-width section.
  */
+.unioncorp-page-content:not(:has(> .alignfull:first-child)) {
+	padding-top: var(--wp--preset--spacing--70);
+}
+
+.unioncorp-page-content:not(:has(> .alignfull:last-child)) {
+	padding-bottom: var(--wp--preset--spacing--70);
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+.unioncorp-topbar p {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	margin: 0;
+}
+
+/* The dark mode switch in the top bar: an icon on the dark ground, not a
+   primary-filled button. */
+.unioncorp-topbar .unioncorp-scheme-toggle > .wp-block-button__link {
+	background-color: transparent;
+	color: var(--wp--preset--color--overlay);
+}
+
+.unioncorp-header .wp-block-navigation__container {
+	flex-wrap: nowrap;
+}
+
+.unioncorp-header .wp-block-navigation-item__content {
+	transition: color 0.2s ease;
+}
+
+.unioncorp-header .wp-block-navigation-item__content:hover,
+.unioncorp-header .current-menu-item > .wp-block-navigation-item__content {
+	color: var(--wp--preset--color--primary);
+}
+
+/*
+ * Core switches the navigation to its menu button below 600px. Seven links, a
+ * site title and a button need about 860px, so between 600 and 960 the links
+ * had nowhere to go but a second row. Collapse at the width the header needs.
+ */
+@media (max-width: 959px) {
+	.unioncorp-header .wp-block-navigation__responsive-container-open:not(.always-shown) {
+		display: flex;
+	}
+
+	.unioncorp-header .wp-block-navigation__responsive-container:not(.hidden-by-default):not(.is-menu-open) {
+		display: none;
+	}
+}
+
+/* ==========================================================================
+   Icons
+
+   Tabler Icons, used as masks: the SVG supplies the shape and the element's
+   own text colour fills it, so an icon takes whatever palette is active and
+   turns over in dark mode with no extra files. A span in rich text survives
+   the editor and kses, where an inline <svg> would not.
+   ========================================================================== */
+
+.unioncorp-icon {
+	display: inline-block;
+	flex: none;
+	width: 1.15em;
+	height: 1.15em;
+	vertical-align: -0.2em;
+	background-color: currentColor;
+	-webkit-mask-position: center;
+	mask-position: center;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	-webkit-mask-size: contain;
+	mask-size: contain;
+}
+
+.unioncorp-icon--award { -webkit-mask-image: url("assets/icons/award.svg"); mask-image: url("assets/icons/award.svg"); }
+.unioncorp-icon--briefcase { -webkit-mask-image: url("assets/icons/briefcase.svg"); mask-image: url("assets/icons/briefcase.svg"); }
+.unioncorp-icon--building-bank { -webkit-mask-image: url("assets/icons/building-bank.svg"); mask-image: url("assets/icons/building-bank.svg"); }
+.unioncorp-icon--calculator { -webkit-mask-image: url("assets/icons/calculator.svg"); mask-image: url("assets/icons/calculator.svg"); }
+.unioncorp-icon--chart-line { -webkit-mask-image: url("assets/icons/chart-line.svg"); mask-image: url("assets/icons/chart-line.svg"); }
+.unioncorp-icon--clock { -webkit-mask-image: url("assets/icons/clock.svg"); mask-image: url("assets/icons/clock.svg"); }
+.unioncorp-icon--device-desktop-analytics { -webkit-mask-image: url("assets/icons/device-desktop-analytics.svg"); mask-image: url("assets/icons/device-desktop-analytics.svg"); }
+.unioncorp-icon--heart-handshake { -webkit-mask-image: url("assets/icons/heart-handshake.svg"); mask-image: url("assets/icons/heart-handshake.svg"); }
+.unioncorp-icon--mail { -webkit-mask-image: url("assets/icons/mail.svg"); mask-image: url("assets/icons/mail.svg"); }
+.unioncorp-icon--map-pin { -webkit-mask-image: url("assets/icons/map-pin.svg"); mask-image: url("assets/icons/map-pin.svg"); }
+.unioncorp-icon--phone { -webkit-mask-image: url("assets/icons/phone.svg"); mask-image: url("assets/icons/phone.svg"); }
+.unioncorp-icon--pig-money { -webkit-mask-image: url("assets/icons/pig-money.svg"); mask-image: url("assets/icons/pig-money.svg"); }
+.unioncorp-icon--quote { -webkit-mask-image: url("assets/icons/quote.svg"); mask-image: url("assets/icons/quote.svg"); }
+.unioncorp-icon--receipt-tax { -webkit-mask-image: url("assets/icons/receipt-tax.svg"); mask-image: url("assets/icons/receipt-tax.svg"); }
+.unioncorp-icon--shield-check { -webkit-mask-image: url("assets/icons/shield-check.svg"); mask-image: url("assets/icons/shield-check.svg"); }
+.unioncorp-icon--users { -webkit-mask-image: url("assets/icons/users.svg"); mask-image: url("assets/icons/users.svg"); }
+.unioncorp-icon--alert-triangle { -webkit-mask-image: url("assets/icons/alert-triangle.svg"); mask-image: url("assets/icons/alert-triangle.svg"); }
+
+/*
+ * Pages built by 1.0.x.
+ *
+ * 1.0 drew these icons with the Flaticon font, and activation copies a pattern's
+ * markup into the page it builds, so a site that installed 1.0 still has
+ * `<span class="flaticon-…">` in its Services and Home pages, and in its header
+ * if that was edited in the Site Editor. No pattern emits these classes any
+ * more; the rules are here so updating does not leave those cards with empty
+ * tiles. Each maps onto the icon that replaced it.
+ */
+[class^="flaticon-"],
+[class*=" flaticon-"] {
+	display: inline-block;
+	width: 1.15em;
+	height: 1.15em;
+	vertical-align: -0.2em;
+	background-color: currentColor;
+	-webkit-mask: center / contain no-repeat;
+	mask: center / contain no-repeat;
+}
+
+.flaticon-accounting { -webkit-mask-image: url("assets/icons/calculator.svg"); mask-image: url("assets/icons/calculator.svg"); }
+.flaticon-financial, .flaticon-research { -webkit-mask-image: url("assets/icons/chart-line.svg"); mask-image: url("assets/icons/chart-line.svg"); }
+.flaticon-recession { -webkit-mask-image: url("assets/icons/building-bank.svg"); mask-image: url("assets/icons/building-bank.svg"); }
+.flaticon-tax { -webkit-mask-image: url("assets/icons/receipt-tax.svg"); mask-image: url("assets/icons/receipt-tax.svg"); }
+.flaticon-insurance { -webkit-mask-image: url("assets/icons/shield-check.svg"); mask-image: url("assets/icons/shield-check.svg"); }
+.flaticon-retirement-plan, .flaticon-money { -webkit-mask-image: url("assets/icons/pig-money.svg"); mask-image: url("assets/icons/pig-money.svg"); }
+.flaticon-risk { -webkit-mask-image: url("assets/icons/alert-triangle.svg"); mask-image: url("assets/icons/alert-triangle.svg"); }
+.flaticon-technology { -webkit-mask-image: url("assets/icons/device-desktop-analytics.svg"); mask-image: url("assets/icons/device-desktop-analytics.svg"); }
+.flaticon-accountant { -webkit-mask-image: url("assets/icons/clock.svg"); mask-image: url("assets/icons/clock.svg"); }
+
+/* The 1.0 tile paragraph carries `has-primary-color`, which is !important, so
+   the icon cannot turn over with the tile through currentColor: paint it. */
+.unioncorp-card__icon [class*="flaticon-"] {
+	width: 1.75rem;
+	height: 1.75rem;
+	vertical-align: 0;
+}
+
+.is-style-unioncorp-card:hover .unioncorp-card__icon [class*="flaticon-"],
+.is-style-unioncorp-card:focus-within .unioncorp-card__icon [class*="flaticon-"] {
+	background-color: var(--wp--preset--color--on-primary);
+}
+
+/* A line of contact detail: icon, then text, aligned on the first line. */
+.unioncorp-detail {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.75em;
+}
+
+.unioncorp-detail .unioncorp-icon {
+	margin-top: 0.25em;
+	color: var(--wp--preset--color--primary);
+}
+
+.has-dark-background-color .unioncorp-detail .unioncorp-icon {
+	color: var(--wp--preset--color--on-dark);
+}
+
+/* ==========================================================================
+   Card  (block style: core/group › Card)
+   ========================================================================== */
+
+.is-style-unioncorp-card {
+	border: 1px solid var(--wp--preset--color--divider);
+	box-shadow: var(--wp--preset--shadow--card);
+	transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.is-style-unioncorp-card:hover,
+.is-style-unioncorp-card:focus-within {
+	transform: translateY(-6px);
+	box-shadow: var(--wp--preset--shadow--lifted);
+	border-color: color-mix(in srgb, var(--wp--preset--color--primary) 40%, var(--wp--preset--color--divider));
+}
+
+/* The icon tile at the top of a card. Inline-level, so the constrained
+   layout's automatic side margins cannot centre it away from the text. */
+.unioncorp-card__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 3.75rem;
+	height: 3.75rem;
+	border-radius: 14px;
+	background-color: color-mix(in srgb, var(--wp--preset--color--primary) 11%, transparent);
+	color: var(--wp--preset--color--primary);
+	transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease;
+}
+
+.unioncorp-card__icon .unioncorp-icon {
+	width: 1.75rem;
+	height: 1.75rem;
+	vertical-align: 0;
+}
+
+.is-style-unioncorp-card:hover .unioncorp-card__icon,
+.is-style-unioncorp-card:focus-within .unioncorp-card__icon {
+	background-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--on-primary);
+	transform: scale(1.06);
+}
+
+/* A card set on the primary ground, like the highlighted card in a row. */
+.is-style-unioncorp-card.has-primary-background-color {
+	border-color: var(--wp--preset--color--primary);
+}
+
+.has-primary-background-color .unioncorp-card__icon {
+	background-color: color-mix(in srgb, var(--wp--preset--color--on-primary) 16%, transparent);
+	color: var(--wp--preset--color--on-primary);
+}
+
+.is-style-unioncorp-card.has-primary-background-color:hover .unioncorp-card__icon {
+	background-color: var(--wp--preset--color--on-primary);
+	color: var(--wp--preset--color--primary);
+}
+
+/* ==========================================================================
+   Panel  (block style: core/group › Panel)
+   ========================================================================== */
+
+.is-style-unioncorp-panel {
+	border-left: 4px solid var(--wp--preset--color--primary);
+	border-radius: 8px;
+	background-color: color-mix(in srgb, var(--wp--preset--color--primary) 6%, var(--wp--preset--color--base));
+	padding: var(--wp--preset--spacing--40);
+}
+
+/* ==========================================================================
+   Ghost button  (block style: core/button › Ghost)
+
+   A real border rather than an inset shadow: it is what makes the outline
+   visible, and it is what a non-text contrast check can measure. The padding
+   gives back the border's width so a ghost button sits the same size as a
+   solid one beside it.
+   ========================================================================== */
+
+.wp-block-button.is-style-unioncorp-ghost > .wp-block-button__link {
+	border: 2px solid currentColor;
+	background-color: transparent;
+	color: var(--wp--preset--color--primary);
+	padding: calc(0.9rem - 2px) calc(1.75rem - 2px);
+	transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.wp-block-button.is-style-unioncorp-ghost > .wp-block-button__link:hover,
+.wp-block-button.is-style-unioncorp-ghost > .wp-block-button__link:focus-visible {
+	border-color: var(--wp--preset--color--primary);
+	background-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--on-primary);
+}
+
+/*
+ * On a darkened photograph, buttons turn light.
+ *
+ * Measured against the pixels behind it, the primary fill came out at 1.06:1 on
+ * the hero: a mid blue on a photograph dimmed with navy is nearly the same
+ * luminance, so in greyscale — and to many colour-blind visitors — the main call
+ * to action melted into the picture. The original template puts light buttons
+ * on its photographs for the same reason. The solid button is white with the
+ * `dark` label, the one pair audited in every palette (a primary label on white
+ * fails on Midnight and Graphite), and it lifts on hover rather than changing
+ * colour, which would bring the problem straight back.
+ *
+ * `is-light` is core's own class for a cover whose overlay is light; those keep
+ * the ordinary colours.
+ */
+.wp-block-cover:not(.is-light) .wp-block-button:not(.is-style-unioncorp-ghost):not(.unioncorp-scheme-toggle) > .wp-block-button__link {
+	background-color: var(--wp--preset--color--overlay);
+	color: var(--wp--preset--color--dark);
+	transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.wp-block-cover:not(.is-light) .wp-block-button:not(.is-style-unioncorp-ghost):not(.unioncorp-scheme-toggle) > .wp-block-button__link:hover,
+.wp-block-cover:not(.is-light) .wp-block-button:not(.is-style-unioncorp-ghost):not(.unioncorp-scheme-toggle) > .wp-block-button__link:focus-visible {
+	box-shadow: 0 10px 26px rgb(0 0 0 / 0.35);
+	transform: translateY(-2px);
+}
+
+/* The outline button beside it: white outline and label, filling white on hover
+   with the `dark` label. */
+.wp-block-cover:not(.is-light) .wp-block-button.is-style-unioncorp-ghost > .wp-block-button__link {
+	color: var(--wp--preset--color--overlay);
+}
+
+.wp-block-cover:not(.is-light) .wp-block-button.is-style-unioncorp-ghost > .wp-block-button__link:hover,
+.wp-block-cover:not(.is-light) .wp-block-button.is-style-unioncorp-ghost > .wp-block-button__link:focus-visible {
+	border-color: var(--wp--preset--color--overlay);
+	background-color: var(--wp--preset--color--overlay);
+	color: var(--wp--preset--color--dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wp-block-cover:not(.is-light) .wp-block-button > .wp-block-button__link:hover {
+		transform: none;
+	}
+}
+
+/* ==========================================================================
+   Tick list  (block style: core/list › Tick list)
+   ========================================================================== */
+
+.is-style-unioncorp-ticks {
+	list-style: none;
+	padding-left: 0;
+}
+
+.is-style-unioncorp-ticks > li {
+	position: relative;
+	padding-left: 1.9em;
+}
+
+.is-style-unioncorp-ticks > li + li {
+	margin-top: 0.6em;
+}
+
+.is-style-unioncorp-ticks > li::before {
+	content: "";
+	position: absolute;
+	top: 0.2em;
+	left: 0;
+	width: 1.15em;
+	height: 1.15em;
+	background-color: var(--wp--preset--color--primary);
+	-webkit-mask: url("assets/icons/check.svg") center / contain no-repeat;
+	mask: url("assets/icons/check.svg") center / contain no-repeat;
+}
+
+.has-dark-background-color .is-style-unioncorp-ticks > li::before {
+	background-color: var(--wp--preset--color--on-dark);
+}
+
+/* ==========================================================================
+   Eyebrow  (block style: core/heading › Eyebrow, and the pattern class)
+   ========================================================================== */
+
+.unioncorp-eyebrow,
+.is-style-unioncorp-eyebrow {
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.is-style-unioncorp-eyebrow {
+	color: var(--wp--preset--color--primary);
+	font-size: var(--wp--preset--font-size--small);
+}
+
+/* ==========================================================================
+   Photographs: hover
+   ========================================================================== */
+
+.unioncorp-gallery .wp-block-image {
+	overflow: hidden;
+	border-radius: 6px;
+}
+
+.unioncorp-gallery .wp-block-image img,
+.wp-block-post-featured-image img,
+.unioncorp-team .wp-block-image img {
+	transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.5s ease;
+}
+
+.unioncorp-gallery .wp-block-image:hover img {
+	transform: scale(1.06);
+}
+
+.wp-block-post-featured-image {
+	overflow: hidden;
+}
+
+.wp-block-post:hover .wp-block-post-featured-image img {
+	transform: scale(1.05);
+}
+
+.unioncorp-team .wp-block-column:hover .wp-block-image img {
+	transform: translateY(-6px);
+	box-shadow: var(--wp--preset--shadow--lifted);
+}
+
+/* ==========================================================================
+   Post dates carry a calendar icon, wherever the block is used.
+   ========================================================================== */
+
+.wp-block-post-date {
+	display: flex;
+	align-items: center;
+	gap: 0.45em;
+}
+
+.wp-block-post-date::before {
+	content: "";
+	flex: none;
+	width: 1em;
+	height: 1em;
+	background-color: currentColor;
+	-webkit-mask: url("assets/icons/calendar.svg") center / contain no-repeat;
+	mask: url("assets/icons/calendar.svg") center / contain no-repeat;
+}
+
+/* ==========================================================================
+   Video button and its popup (assets/js/interactions.js)
+
+   Without JavaScript the button is an ordinary link to the video.
+   ========================================================================== */
+
+.unioncorp-video > .wp-block-button__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.75em;
+}
+
+.unioncorp-video > .wp-block-button__link::before {
+	content: "";
+	flex: none;
+	width: 1.2em;
+	height: 1.2em;
+	background-color: currentColor;
+	-webkit-mask: url("assets/icons/player-play.svg") center / contain no-repeat;
+	mask: url("assets/icons/player-play.svg") center / contain no-repeat;
+}
+
+.unioncorp-video-dialog {
+	width: min(960px, 92vw);
+	padding: 0;
+	border: 0;
+	border-radius: 10px;
+	overflow: visible;
+	background: #000;
+}
+
+.unioncorp-video-dialog::backdrop {
+	background: rgb(0 0 0 / 0.82);
+}
+
+.unioncorp-video-dialog iframe {
+	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	border: 0;
+	border-radius: 10px;
+}
+
+.unioncorp-video-dialog__close {
+	position: absolute;
+	top: -3rem;
+	right: 0;
+	width: 2.5rem;
+	height: 2.5rem;
+	border: 0;
+	border-radius: 50%;
+	background: rgb(255 255 255 / 0.14);
+	color: #fff;
+	font-size: 1.5rem;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.unioncorp-video-dialog__close:hover,
+.unioncorp-video-dialog__close:focus-visible {
+	background: rgb(255 255 255 / 0.28);
+}
+
+/* ==========================================================================
+   Scroll reveals (assets/js/interactions.js)
+
+   Hidden only once the script has run and only for what is below the first
+   screen, so a visitor without JavaScript, a crawler, or anyone looking at the
+   top of the page sees content immediately — hiding the opening screen is what
+   makes PageSpeed report no first contentful paint at all.
+   ========================================================================== */
+
+.unioncorp-motion .unioncorp-reveal {
+	opacity: 0;
+	transform: translate3d(0, 28px, 0);
+	transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+	transition-delay: var(--unioncorp-reveal-delay, 0ms);
+}
+
+.unioncorp-motion .unioncorp-reveal.is-revealed {
+	opacity: 1;
+	transform: none;
+}
+
+/* ==========================================================================
+   Reduced motion: no movement anywhere, content shown at once.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+	.unioncorp-motion .unioncorp-reveal {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+
+	.is-style-unioncorp-card,
+	.unioncorp-card__icon,
+	.unioncorp-gallery .wp-block-image img,
+	.wp-block-post-featured-image img,
+	.unioncorp-team .wp-block-image img {
+		transition: none;
+	}
+
+	.is-style-unioncorp-card:hover,
+	.is-style-unioncorp-card:focus-within,
+	.is-style-unioncorp-card:hover .unioncorp-card__icon,
+	.unioncorp-gallery .wp-block-image:hover img,
+	.wp-block-post:hover .wp-block-post-featured-image img,
+	.unioncorp-team .wp-block-column:hover .wp-block-image img {
+		transform: none;
+	}
+}
+
+/* ==========================================================================
+   Links on the dark ground
+
+   The palette's `primary` is chosen to be readable on the page background,
+   which makes it 2.64:1 against the footer's navy — so the footer states its
+   own link colour rather than inheriting one that fails.
+   ========================================================================== */
+
 .wp-block-group.has-dark-background-color a,
 .wp-block-cover.has-dark-background-color a {
 	color: var(--wp--preset--color--overlay);

@@ -74,7 +74,7 @@ function unioncorp_register_block_styles() {
 			array( 'unioncorp-ghost', __( 'Ghost', 'unioncorp' ) ),
 		),
 		'core/list'    => array(
-			array( 'unioncorp-ticks', __( 'Arrow list', 'unioncorp' ) ),
+			array( 'unioncorp-ticks', __( 'Tick list', 'unioncorp' ) ),
 		),
 	);
 
@@ -92,6 +92,43 @@ function unioncorp_register_block_styles() {
 	}
 }
 add_action( 'init', 'unioncorp_register_block_styles' );
+
+/**
+ * Scroll reveals, figures that count up, and the video popup.
+ *
+ * Deferred and in the footer: everything the script does is an enhancement, so
+ * it never needs to hold up rendering. `unioncorp_enable_scroll_animations`
+ * switches off the motion — reveals and counting — and leaves the video popup,
+ * which is behaviour rather than decoration.
+ *
+ * The settings go in as JSON, not through wp_localize_script(), which turns
+ * `false` into an empty string that the script would read as "on".
+ */
+function unioncorp_enqueue_interactions() {
+	wp_enqueue_script(
+		'unioncorp-interactions',
+		get_template_directory_uri() . '/assets/js/interactions.js',
+		array(),
+		UNIONCORP_VERSION,
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
+	);
+
+	wp_add_inline_script(
+		'unioncorp-interactions',
+		'window.unioncorpMotion = ' . wp_json_encode(
+			array(
+				'enabled'    => (bool) apply_filters( 'unioncorp_enable_scroll_animations', true ),
+				'videoLabel' => __( 'Video', 'unioncorp' ),
+				'closeLabel' => __( 'Close video', 'unioncorp' ),
+			)
+		) . ';',
+		'before'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'unioncorp_enqueue_interactions' );
 
 /**
  * Pattern categories.

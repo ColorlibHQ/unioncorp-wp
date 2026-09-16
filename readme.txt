@@ -56,9 +56,16 @@ links, buttons and anything else you have to read.
 Yes: add add_filter( 'unioncorp_enable_dark_mode', '__return_false' ); to a
 child theme or a small plugin.
 
+= Can I turn the scroll animations off? =
+
+Yes: add add_filter( 'unioncorp_enable_scroll_animations', '__return_false' );
+to a child theme or a small plugin. That stops sections fading in and figures
+counting up; the video popup keeps working. Visitors who have asked their
+system for reduced motion never see the animations either way.
+
 == Theme Check ==
 
-Theme Check reports four REQUIRED findings and no warnings. All four are
+Theme Check reports three REQUIRED findings and no warnings. All three are
 deliberate, and each is the price of something the theme does on purpose.
 
 1. **add_shortcode() in inc/enquiry.php.** The enquiry form has to keep working
@@ -68,11 +75,7 @@ deliberate, and each is the price of something the theme does on purpose.
    on a page the theme built.
 2. **Unsplash photographs.** The demo images are Unsplash-licensed, which is not
    GPL-compatible. Replace them with your own and the finding goes with them.
-3. **The Flaticon icon font**, used by the service cards, is CC BY 3.0:
-   attribution is required and the licence is not GPL-compatible. Credited
-   below. To remove it entirely, delete the @font-face and glyph rules from
-   style.css and replace the icons in patterns/services.php with inline SVG.
-4. **Update URI in style.css.** This theme is distributed outside the
+3. **Update URI in style.css.** This theme is distributed outside the
    WordPress.org directory and checks colorlib.com for its own updates. A theme
    inside the directory must not carry this header.
 
@@ -85,9 +88,9 @@ Poppins and Inter
 License: SIL Open Font License 1.1
 Source: https://fontsource.org/
 
-Flaticon icon font
-License: CC BY 3.0
-Source: https://www.flaticon.com/
+Tabler Icons
+License: MIT, https://github.com/tabler/tabler-icons/blob/main/LICENSE
+Source: https://tabler.io/icons
 
 Photographs
 License: Unsplash License, https://unsplash.com/license

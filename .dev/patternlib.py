@@ -214,7 +214,7 @@ def buttons(items, align=None, gap=None, nowrap=False):
     )
 
 
-def image(slug, alt, ratio=None, scale="cover", style=None, rounded=None):
+def image(slug, alt, ratio=None, scale="cover", style=None, rounded=None, lightbox=False, width=None):
     """A core/image, in the exact shape core's save() writes.
 
     Two details that are easy to get wrong and that make the editor declare the
@@ -222,14 +222,23 @@ def image(slug, alt, ratio=None, scale="cover", style=None, rounded=None):
     well as the radius to the img, and the radius comes FIRST in the img's
     style, before aspect-ratio. Both were verified by serialising a real
     core/image in the browser (.dev/normalize-blocks.mjs does that routinely).
+
+    `lightbox` switches on core's own enlarge-on-click, which needs no script of
+    the theme's and which an editor can turn off per image. `width` fixes a small
+    image such as an avatar.
     """
     data = {}
     cls = ["wp-block-image", "size-large"]
     declarations = []
 
+    if lightbox:
+        data["lightbox"] = {"enabled": True}
     if ratio:
         data["aspectRatio"] = ratio
         data["scale"] = scale
+    if width:
+        data["width"] = width
+        cls.append("is-resized")
     data["sizeSlug"] = "large"
     data["linkDestination"] = "none"
 
@@ -240,6 +249,8 @@ def image(slug, alt, ratio=None, scale="cover", style=None, rounded=None):
 
     if ratio:
         declarations += ["aspect-ratio:" + ratio, "object-fit:" + scale]
+    if width:
+        declarations.append("width:" + width)
 
     if style:
         data["className"] = "is-style-" + style

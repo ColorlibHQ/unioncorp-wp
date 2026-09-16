@@ -12,8 +12,8 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 <!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"surface","layout":{"type":"constrained"},"anchor":"services"} -->
-<div class="wp-block-group alignfull has-surface-background-color has-background" id="services" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
-<div class="wp-block-group"><!-- wp:paragraph {"className":"unioncorp-eyebrow","style":{"typography":{"textAlign":"center"}},"textColor":"primary","fontSize":"small"} -->
+<div class="wp-block-group alignfull has-surface-background-color has-background" id="services" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"className":"unioncorp-section-head","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
+<div class="wp-block-group unioncorp-section-head"><!-- wp:paragraph {"className":"unioncorp-eyebrow","style":{"typography":{"textAlign":"center"}},"textColor":"primary","fontSize":"small"} -->
 <p class="has-text-align-center unioncorp-eyebrow has-primary-color has-text-color has-small-font-size">Our services</p>
 <!-- /wp:paragraph -->
 
@@ -33,8 +33,8 @@ defined( 'ABSPATH' ) || exit;
 <!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|40"}}}} -->
 <div class="wp-block-columns"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-unioncorp-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"var:preset|spacing|20"},"border":{"radius":"8px"}},"backgroundColor":"base","layout":{"type":"constrained"}} -->
-<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon","textColor":"primary","fontSize":"x-large"} -->
-<p class="unioncorp-card__icon has-primary-color has-text-color has-x-large-font-size"><span class="flaticon-accounting"></span></p>
+<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon"} -->
+<p class="unioncorp-card__icon"><span class="unioncorp-icon unioncorp-icon--calculator" aria-hidden="true"></span></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"large"} -->
@@ -49,8 +49,8 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-unioncorp-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"var:preset|spacing|20"},"border":{"radius":"8px"}},"backgroundColor":"base","layout":{"type":"constrained"}} -->
-<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon","textColor":"primary","fontSize":"x-large"} -->
-<p class="unioncorp-card__icon has-primary-color has-text-color has-x-large-font-size"><span class="flaticon-financial"></span></p>
+<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon"} -->
+<p class="unioncorp-card__icon"><span class="unioncorp-icon unioncorp-icon--chart-line" aria-hidden="true"></span></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"large"} -->
@@ -65,8 +65,8 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-unioncorp-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"var:preset|spacing|20"},"border":{"radius":"8px"}},"backgroundColor":"base","layout":{"type":"constrained"}} -->
-<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon","textColor":"primary","fontSize":"x-large"} -->
-<p class="unioncorp-card__icon has-primary-color has-text-color has-x-large-font-size"><span class="flaticon-recession"></span></p>
+<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon"} -->
+<p class="unioncorp-card__icon"><span class="unioncorp-icon unioncorp-icon--building-bank" aria-hidden="true"></span></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"large"} -->
@@ -81,8 +81,8 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-unioncorp-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"var:preset|spacing|20"},"border":{"radius":"8px"}},"backgroundColor":"base","layout":{"type":"constrained"}} -->
-<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon","textColor":"primary","fontSize":"x-large"} -->
-<p class="unioncorp-card__icon has-primary-color has-text-color has-x-large-font-size"><span class="flaticon-tax"></span></p>
+<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon"} -->
+<p class="unioncorp-card__icon"><span class="unioncorp-icon unioncorp-icon--receipt-tax" aria-hidden="true"></span></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"large"} -->
@@ -99,8 +99,8 @@ defined( 'ABSPATH' ) || exit;
 <!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|40"}}}} -->
 <div class="wp-block-columns"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-unioncorp-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"var:preset|spacing|20"},"border":{"radius":"8px"}},"backgroundColor":"base","layout":{"type":"constrained"}} -->
-<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon","textColor":"primary","fontSize":"x-large"} -->
-<p class="unioncorp-card__icon has-primary-color has-text-color has-x-large-font-size"><span class="flaticon-insurance"></span></p>
+<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon"} -->
+<p class="unioncorp-card__icon"><span class="unioncorp-icon unioncorp-icon--shield-check" aria-hidden="true"></span></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"large"} -->
@@ -115,8 +115,8 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-unioncorp-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"var:preset|spacing|20"},"border":{"radius":"8px"}},"backgroundColor":"base","layout":{"type":"constrained"}} -->
-<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon","textColor":"primary","fontSize":"x-large"} -->
-<p class="unioncorp-card__icon has-primary-color has-text-color has-x-large-font-size"><span class="flaticon-retirement-plan"></span></p>
+<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon"} -->
+<p class="unioncorp-card__icon"><span class="unioncorp-icon unioncorp-icon--pig-money" aria-hidden="true"></span></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"large"} -->
@@ -131,8 +131,8 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-unioncorp-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"var:preset|spacing|20"},"border":{"radius":"8px"}},"backgroundColor":"base","layout":{"type":"constrained"}} -->
-<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon","textColor":"primary","fontSize":"x-large"} -->
-<p class="unioncorp-card__icon has-primary-color has-text-color has-x-large-font-size"><span class="flaticon-risk"></span></p>
+<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon"} -->
+<p class="unioncorp-card__icon"><span class="unioncorp-icon unioncorp-icon--alert-triangle" aria-hidden="true"></span></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"large"} -->
@@ -147,8 +147,8 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-unioncorp-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"var:preset|spacing|20"},"border":{"radius":"8px"}},"backgroundColor":"base","layout":{"type":"constrained"}} -->
-<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon","textColor":"primary","fontSize":"x-large"} -->
-<p class="unioncorp-card__icon has-primary-color has-text-color has-x-large-font-size"><span class="flaticon-technology"></span></p>
+<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"unioncorp-card__icon"} -->
+<p class="unioncorp-card__icon"><span class="unioncorp-icon unioncorp-icon--device-desktop-analytics" aria-hidden="true"></span></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"large"} -->

@@ -12,8 +12,8 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 <!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
-<div class="wp-block-group"><!-- wp:paragraph {"className":"unioncorp-eyebrow","style":{"typography":{"textAlign":"center"}},"textColor":"primary","fontSize":"small"} -->
+<div class="wp-block-group alignfull" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"className":"unioncorp-section-head","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
+<div class="wp-block-group unioncorp-section-head"><!-- wp:paragraph {"className":"unioncorp-eyebrow","style":{"typography":{"textAlign":"center"}},"textColor":"primary","fontSize":"small"} -->
 <p class="has-text-align-center unioncorp-eyebrow has-primary-color has-text-color has-small-font-size">From the blog</p>
 <!-- /wp:paragraph -->
 

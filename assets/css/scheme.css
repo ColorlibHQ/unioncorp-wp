@@ -140,9 +140,17 @@
 	filter: invert(1);
 }
 
-/* The card and elevated section styles sit on `base`, which has moved. */
-.unioncorp-dark .is-style-card,
-.unioncorp-dark .is-style-elevated {
-	background-color: var(--wp--preset--color--surface);
-	border-color: var(--wp--preset--color--divider);
+/*
+ * Cards. A shadow barely registers against a dark page, so a card is separated
+ * from its ground by its border here, and lifts with a deeper shadow on hover.
+ * (This rule used to target `is-style-card` and `is-style-elevated` — another
+ * theme's names, which nothing in this one emits.)
+ */
+.unioncorp-dark .is-style-unioncorp-card {
+	box-shadow: none;
+}
+
+.unioncorp-dark .is-style-unioncorp-card:hover,
+.unioncorp-dark .is-style-unioncorp-card:focus-within {
+	box-shadow: 0 14px 34px rgb(0 0 0 / 0.5);
 }

@@ -18,7 +18,17 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:paragraph {"textColor":"on-dark","fontSize":"small"} -->
 <p class="has-on-dark-color has-text-color has-small-font-size">Financial planning and consulting for businesses and the people who run them.</p>
-<!-- /wp:paragraph --></div>
+<!-- /wp:paragraph -->
+
+<!-- wp:social-links {"iconColor":"overlay","iconColorValue":"#ffffff","size":"has-small-icon-size","className":"is-style-logos-only","layout":{"type":"flex","justifyContent":"right","flexWrap":"nowrap"}} -->
+<ul class="wp-block-social-links has-small-icon-size has-icon-color is-style-logos-only"><!-- wp:social-link {"url":"#","service":"x"} /-->
+
+<!-- wp:social-link {"url":"#","service":"facebook"} /-->
+
+<!-- wp:social-link {"url":"#","service":"instagram"} /-->
+
+<!-- wp:social-link {"url":"#","service":"linkedin"} /--></ul>
+<!-- /wp:social-links --></div>
 <!-- /wp:column -->
 
 <!-- wp:column -->
@@ -58,16 +68,16 @@ defined( 'ABSPATH' ) || exit;
 <h3 class="wp-block-heading has-overlay-color has-text-color has-large-font-size">Have a question?</h3>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"textColor":"on-dark","fontSize":"small"} -->
-<p class="has-on-dark-color has-text-color has-small-font-size">203 Fake St. Mountain View, San Francisco, California, USA</p>
+<!-- wp:paragraph {"className":"unioncorp-detail","textColor":"on-dark","fontSize":"small"} -->
+<p class="unioncorp-detail has-on-dark-color has-text-color has-small-font-size"><span class="unioncorp-icon unioncorp-icon--map-pin" aria-hidden="true"></span><span>203 Fake St. Mountain View, San Francisco, California, USA</span></p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"textColor":"on-dark","fontSize":"small"} -->
-<p class="has-on-dark-color has-text-color has-small-font-size">+2 392 3929 210</p>
+<!-- wp:paragraph {"className":"unioncorp-detail","textColor":"on-dark","fontSize":"small"} -->
+<p class="unioncorp-detail has-on-dark-color has-text-color has-small-font-size"><span class="unioncorp-icon unioncorp-icon--phone" aria-hidden="true"></span><span>+2 392 3929 210</span></p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"textColor":"on-dark","fontSize":"small"} -->
-<p class="has-on-dark-color has-text-color has-small-font-size">info@yourdomain.com</p>
+<!-- wp:paragraph {"className":"unioncorp-detail","textColor":"on-dark","fontSize":"small"} -->
+<p class="unioncorp-detail has-on-dark-color has-text-color has-small-font-size"><span class="unioncorp-icon unioncorp-icon--mail" aria-hidden="true"></span><span>info@yourdomain.com</span></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div>
