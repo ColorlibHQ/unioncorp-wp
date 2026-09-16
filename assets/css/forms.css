@@ -1,7 +1,7 @@
 /*
  * Forms.
  *
- * Two jobs: style Unioncorp's own reservation form, and pull the common form
+ * Two jobs: style Unioncorp's own enquiry form, and pull the common form
  * plugins onto the theme's tokens so a form block does not look like a
  * different website dropped into the page.
  *
@@ -48,7 +48,7 @@
 	/* Without this every control is 34px wider than the cell it sits in.
 	   `width: 100%` plus 2rem of horizontal padding and a 1px border adds up
 	   to 100% + 34px on a content-box, so the right-hand column of the
-	   reservation grid pushed out past the panel it lives in. Form controls do
+	   enquiry grid pushed out past the panel it lives in. Form controls do
 	   not inherit a border-box reset from WordPress or from the theme, so they
 	   have to be told. */
 	box-sizing: border-box;
@@ -88,7 +88,7 @@
  * One height for every control in the grid.
  *
  * A date or time input renders its own native picker widget and comes out
- * taller than the text input beside it -- in a two-column reservation grid
+ * taller than the text input beside it -- in a two-column enquiry grid
  * that means Date sits a few pixels lower than Phone, and the rows visibly
  * fail to line up. Setting the same min-height on all of them, rather than
  * only on date and time as the first version did, is what makes the grid read
@@ -131,10 +131,10 @@ textarea.unioncorp-field__control {
 }
 
 /* ---------------------------------------------------------------------------
-   Unioncorp's reservation form
+   Unioncorp's enquiry form
    --------------------------------------------------------------------------- */
 
-.unioncorp-reservation {
+.unioncorp-enquiry {
 	margin: 0;
 }
 
@@ -143,7 +143,7 @@ textarea.unioncorp-field__control {
  * invisible, and it must not add height — an empty div with a margin would
  * push the panel down by whatever the block gap is.
  */
-.unioncorp-reservation__anchor {
+.unioncorp-enquiry__anchor {
 	position: relative;
 	top: -90px;
 	display: block;
@@ -151,39 +151,39 @@ textarea.unioncorp-field__control {
 	visibility: hidden;
 }
 
-.unioncorp-reservation__grid {
+.unioncorp-enquiry__grid {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 1.1rem 1.25rem;
 }
 
-.unioncorp-reservation__grid .unioncorp-field {
+.unioncorp-enquiry__grid .unioncorp-field {
 	margin: 0;
 }
 
-/* Name, date/time/people pair up; the message always spans. */
-.unioncorp-reservation__grid .unioncorp-field--message {
+/* Name and email, phone and company pair up; the message always spans. */
+.unioncorp-enquiry__grid .unioncorp-field--message {
 	grid-column: 1 / -1;
 }
 
 @media (max-width: 600px) {
-	.unioncorp-reservation__grid {
+	.unioncorp-enquiry__grid {
 		grid-template-columns: 1fr;
 	}
 }
 
-.unioncorp-reservation__actions {
+.unioncorp-enquiry__actions {
 	margin: 1.6rem 0 0;
 }
 
-.unioncorp-reservation__actions .wp-element-button {
+.unioncorp-enquiry__actions .wp-element-button {
 	cursor: pointer;
 	border: 0;
 }
 
 /* The honeypot. Off-screen rather than display:none, because some bots skip
    anything that is display:none and fill everything else. */
-.unioncorp-reservation__trap {
+.unioncorp-enquiry__trap {
 	position: absolute;
 	left: -9999px;
 	width: 1px;
@@ -191,7 +191,7 @@ textarea.unioncorp-field__control {
 	overflow: hidden;
 }
 
-.unioncorp-reservation__notice {
+.unioncorp-enquiry__notice {
 	margin: 0 0 1.4rem;
 	padding: 0.95rem 1.2rem;
 	border-left: 3px solid currentColor;
@@ -200,11 +200,18 @@ textarea.unioncorp-field__control {
 	background-color: color-mix(in srgb, currentColor 8%, transparent);
 }
 
-.unioncorp-reservation__notice.is-ok {
-	color: #1f7a34;
+.unioncorp-enquiry__notice.is-ok {
+	/* The words carry the message; green marks it. Measured across the eight
+	   palettes in both schemes, a literal green (#1f7a34) fails AA as text in 10
+	   of the 16 combinations and the palette's `success` in 8. Both are
+	   decorative greens, and Midnight and Graphite have a dark page even in light
+	   mode. `contrast` passes all sixteen at 13:1 or better, and `success` clears
+	   the 3:1 a decorative border needs in every one. */
+	color: var(--wp--preset--color--contrast);
+	border-left-color: var(--wp--preset--color--success);
 }
 
-.unioncorp-reservation__notice.is-error {
+.unioncorp-enquiry__notice.is-error {
 	color: var(--wp--preset--color--primary);
 }
 

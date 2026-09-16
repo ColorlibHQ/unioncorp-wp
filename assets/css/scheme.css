@@ -123,7 +123,7 @@
 
 /*
  * Form controls do not inherit the page's colours, so they have to be told.
- * Without this the reservation form stays a block of white in a dark page.
+ * Without this the enquiry form stays a block of white in a dark page.
  */
 .unioncorp-dark .unioncorp-field__control,
 .unioncorp-dark .wp-block-search__input,

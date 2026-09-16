@@ -4,7 +4,7 @@ Contributors: colorlib
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: business, portfolio, blog, full-site-editing, block-patterns, block-styles, template-editing, wide-blocks, accessibility-ready, translation-ready, custom-colors, custom-menu, custom-logo, featured-images, threaded-comments, one-column, two-columns, right-sidebar, rtl-language-support, sticky-post, theme-options
@@ -94,6 +94,11 @@ License: Unsplash License, https://unsplash.com/license
 Source: https://unsplash.com/
 
 == Changelog ==
+
+= 1.0.1 =
+* Fixed: the enquiry form's anti-spam field was visible above the form, labelled "Leave this field empty". Its hiding rule targeted a class name the form never used.
+* Fixed: for the same reason the form's two-column layout, the spacing above its button, and its styled success and error messages never applied. Name and email, and phone and company, now sit side by side, with the message across the full width.
+* Changed: the success message is set in the text colour with a green edge instead of green text. Measured across all eight palettes in light and dark mode, green text failed WCAG AA contrast in most of them.
 
 = 1.0.0 =
 * Initial release.

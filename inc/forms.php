@@ -52,7 +52,7 @@ function unioncorp_active_form_plugins() {
  * Load the form stylesheet only where a form can appear.
  */
 function unioncorp_enqueue_form_styles() {
-	// Unioncorp's own reservation form is always a possibility, so the stylesheet
+	// Unioncorp's own enquiry form is always a possibility, so the stylesheet
 	// is not conditional on a plugin being present — it carries both.
 	wp_enqueue_style(
 		'unioncorp-forms',

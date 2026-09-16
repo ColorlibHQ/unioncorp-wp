@@ -11,8 +11,8 @@
  * every word is editable in the editor without hunting through theme files.
  * That expansion is also why the dynamic parts of the theme are shortcodes:
  * PHP inside stored post content never runs, so a pattern that rendered the
- * reservation form inline would freeze its output into the page permanently.
- * `[unioncorp_reservation_form]` survives the round trip because a shortcode is
+ * enquiry form inline would freeze its output into the page permanently.
+ * `[unioncorp_enquiry_form]` survives the round trip because a shortcode is
  * expanded at render time, every time.
  *
  * @package Unioncorp

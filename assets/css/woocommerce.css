@@ -187,7 +187,7 @@
 .woocommerce form .form-row textarea,
 .woocommerce form .form-row select,
 .woocommerce-page form .form-row input.input-text {
-	/* Same reason as the reservation form: width plus padding on a content-box
+	/* Same reason as the enquiry form: width plus padding on a content-box
 	   overflows the cell. */
 	box-sizing: border-box;
 	padding: 0.85rem 1rem;
