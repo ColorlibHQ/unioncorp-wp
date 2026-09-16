@@ -56,6 +56,26 @@ links, buttons and anything else you have to read.
 Yes: add add_filter( 'unioncorp_enable_dark_mode', '__return_false' ); to a
 child theme or a small plugin.
 
+== Theme Check ==
+
+Theme Check reports four REQUIRED findings and no warnings. All four are
+deliberate, and each is the price of something the theme does on purpose.
+
+1. **add_shortcode() in inc/enquiry.php.** The enquiry form has to keep working
+   after a pattern is expanded into a page's content, where PHP never runs. A
+   shortcode is the only mechanism WordPress offers for that. Moving it to a
+   plugin would mean the form stops working the moment the plugin is disabled,
+   on a page the theme built.
+2. **Unsplash photographs.** The demo images are Unsplash-licensed, which is not
+   GPL-compatible. Replace them with your own and the finding goes with them.
+3. **The Flaticon icon font**, used by the service cards, is CC BY 3.0:
+   attribution is required and the licence is not GPL-compatible. Credited
+   below. To remove it entirely, delete the @font-face and glyph rules from
+   style.css and replace the icons in patterns/services.php with inline SVG.
+4. **Update URI in style.css.** This theme is distributed outside the
+   WordPress.org directory and checks colorlib.com for its own updates. A theme
+   inside the directory must not carry this header.
+
 == Copyright ==
 
 Unioncorp WordPress Theme, (C) 2026 Colorlib.
