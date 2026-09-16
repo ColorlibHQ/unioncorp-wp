@@ -4,7 +4,7 @@ Contributors: colorlib
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: business, portfolio, blog, full-site-editing, block-patterns, block-styles, template-editing, wide-blocks, accessibility-ready, translation-ready, custom-colors, custom-menu, custom-logo, featured-images, threaded-comments, one-column, two-columns, right-sidebar, rtl-language-support, sticky-post, theme-options
@@ -97,6 +97,21 @@ License: Unsplash License, https://unsplash.com/license
 Source: https://unsplash.com/
 
 == Changelog ==
+
+= 1.1.0 =
+* Added: sections, columns and blog posts fade and rise into view as you scroll. Nothing on the first screen is hidden, and nothing is hidden at all without JavaScript or for visitors who prefer reduced motion. A filter switches it off (see the FAQ).
+* Added: the figures in the statistics band count up when they come into view. Screen readers are given the final figure.
+* Added: "Watch the video" plays in a popup, using YouTube's privacy-enhanced embed. Without JavaScript it is an ordinary link to the video.
+* Added: the case study photographs open in a lightbox, and gallery, team and blog photographs zoom slightly on hover.
+* Added: icons on the service cards, the four new feature cards in the welcome section, the top bar, the contact details, the footer, the testimonials and post dates. They take their colour from the palette, so they follow every style variation and dark mode.
+* Added: social links in the top bar and the footer.
+* Changed: cards lift on hover and their icon tile fills with the brand colour. The ghost button has a real outline, the tick list has ticks and eyebrow labels are set in spaced capitals.
+* Fixed: the Card, Panel, Ghost, Tick list and Eyebrow block styles had no styling behind them, so choosing one in the editor changed nothing.
+* Fixed: the header navigation wrapped onto two lines at laptop widths. It now stays on one line and switches to the menu button below 960px.
+* Fixed: uneven blank bands between sections. WordPress's gap between blocks was being added between full-width sections, and above and below the content on some templates but not others.
+* Fixed: on the hero and "Why us" photographs, the main button is now white with a dark label. The brand blue measured 1.06:1 against the darkened photograph, which left the most important button on the page nearly invisible. The "Why us" label, at 2.27:1, is white too, and the hero photograph is darkened a little more.
+* Fixed: team and testimonial names now match the people in the photographs.
+* Removed: the icon font 1.0 used, which was licensed CC BY 3.0 and is not GPL-compatible. Pages built with 1.0 keep their icons: the old icon classes now draw the icons that replaced them.
 
 = 1.0.1 =
 * Fixed: the enquiry form's anti-spam field was visible above the form, labelled "Leave this field empty". Its hiding rule targeted a class name the form never used.
