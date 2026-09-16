@@ -4,7 +4,7 @@ Contributors: colorlib
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: business, portfolio, blog, full-site-editing, block-patterns, block-styles, template-editing, wide-blocks, accessibility-ready, translation-ready, custom-colors, custom-menu, custom-logo, featured-images, threaded-comments, one-column, two-columns, right-sidebar, rtl-language-support, sticky-post, theme-options
@@ -97,6 +97,9 @@ License: Unsplash License, https://unsplash.com/license
 Source: https://unsplash.com/
 
 == Changelog ==
+
+= 1.1.1 =
+* Fixed: the map on the contact page sat flush left instead of centred beneath the form, leaving an empty band beside it on wide screens. It had been like this since 1.0.
 
 = 1.1.0 =
 * Added: sections, columns and blog posts fade and rise into view as you scroll. Nothing on the first screen is hidden, and nothing is hidden at all without JavaScript or for visitors who prefer reduced motion. A filter switches it off (see the FAQ).
