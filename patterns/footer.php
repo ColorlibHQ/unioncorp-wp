@@ -68,16 +68,16 @@ defined( 'ABSPATH' ) || exit;
 <h3 class="wp-block-heading has-overlay-color has-text-color has-large-font-size">Have a question?</h3>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"className":"unioncorp-detail","textColor":"on-dark","fontSize":"small"} -->
-<p class="unioncorp-detail has-on-dark-color has-text-color has-small-font-size"><span class="unioncorp-icon unioncorp-icon--map-pin" aria-hidden="true"></span><span>203 Fake St. Mountain View, San Francisco, California, USA</span></p>
+<!-- wp:paragraph {"className":"unioncorp-detail unioncorp-icon\u002d\u002dmap-pin","textColor":"on-dark","fontSize":"small"} -->
+<p class="unioncorp-detail unioncorp-icon--map-pin has-on-dark-color has-text-color has-small-font-size">203 Fake St. Mountain View, San Francisco, California, USA</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"className":"unioncorp-detail","textColor":"on-dark","fontSize":"small"} -->
-<p class="unioncorp-detail has-on-dark-color has-text-color has-small-font-size"><span class="unioncorp-icon unioncorp-icon--phone" aria-hidden="true"></span><span>+2 392 3929 210</span></p>
+<!-- wp:paragraph {"className":"unioncorp-detail unioncorp-icon\u002d\u002dphone","textColor":"on-dark","fontSize":"small"} -->
+<p class="unioncorp-detail unioncorp-icon--phone has-on-dark-color has-text-color has-small-font-size">+2 392 3929 210</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"className":"unioncorp-detail","textColor":"on-dark","fontSize":"small"} -->
-<p class="unioncorp-detail has-on-dark-color has-text-color has-small-font-size"><span class="unioncorp-icon unioncorp-icon--mail" aria-hidden="true"></span><span>info@yourdomain.com</span></p>
+<!-- wp:paragraph {"className":"unioncorp-detail unioncorp-icon\u002d\u002dmail","textColor":"on-dark","fontSize":"small"} -->
+<p class="unioncorp-detail unioncorp-icon--mail has-on-dark-color has-text-color has-small-font-size">info@yourdomain.com</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div>

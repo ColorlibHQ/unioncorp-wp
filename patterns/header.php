@@ -15,12 +15,12 @@ defined( 'ABSPATH' ) || exit;
 <div class="wp-block-group alignfull unioncorp-topbar has-dark-background-color has-background" style="padding-top:var(--wp--preset--spacing--20);padding-bottom:var(--wp--preset--spacing--20)"><!-- wp:columns {"verticalAlignment":"center","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|30","left":"var:preset|spacing|30"}}}} -->
 <div class="wp-block-columns are-vertically-aligned-center"><!-- wp:column {"verticalAlignment":"center","width":"65%"} -->
 <div class="wp-block-column is-vertically-aligned-center" style="flex-basis:65%"><!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|40"}},"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group"><!-- wp:paragraph {"textColor":"overlay","fontSize":"small"} -->
-<p class="has-overlay-color has-text-color has-small-font-size"><span class="unioncorp-icon unioncorp-icon--phone" aria-hidden="true"></span> +2 392 3929 210</p>
+<div class="wp-block-group"><!-- wp:paragraph {"className":"unioncorp-has-icon unioncorp-icon\u002d\u002dphone","textColor":"overlay","fontSize":"small"} -->
+<p class="unioncorp-has-icon unioncorp-icon--phone has-overlay-color has-text-color has-small-font-size">+2 392 3929 210</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"textColor":"overlay","fontSize":"small"} -->
-<p class="has-overlay-color has-text-color has-small-font-size"><span class="unioncorp-icon unioncorp-icon--clock" aria-hidden="true"></span> Monday – Friday 8:00AM–8:00PM</p>
+<!-- wp:paragraph {"className":"unioncorp-has-icon unioncorp-icon\u002d\u002dclock","textColor":"overlay","fontSize":"small"} -->
+<p class="unioncorp-has-icon unioncorp-icon--clock has-overlay-color has-text-color has-small-font-size">Monday – Friday 8:00AM–8:00PM</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->

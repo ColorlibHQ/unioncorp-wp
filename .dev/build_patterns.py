@@ -53,11 +53,18 @@ def write(slug, title, content, categories=None, keywords=None,
     WRITTEN.append(slug)
 
 
-def icon(name):
-    """A decorative Tabler icon. style.css draws it as a mask filled with the
-    text colour, so it follows the palette and dark mode. Every name used here
-    needs a `.unioncorp-icon--<name>` rule; .dev/dead-selectors.py checks it."""
-    return '<span class="unioncorp-icon unioncorp-icon--%s" aria-hidden="true"></span>' % name
+def icon_class(name):
+    """The class that draws a Tabler icon, carried by the block itself.
+
+    style.css draws the icon as a mask filled with the text colour, so it follows
+    the palette and dark mode. Until 1.1.2 each icon was an empty
+    `<span class="unioncorp-icon …">` inside the paragraph: it rendered on the
+    site, but the editor does not draw an empty inline element, so every card
+    tile showed "Type / to choose a block" and every contact line lost its icon.
+    As a class on the paragraph it shows in the editor too, and changing an icon
+    is an edit to Advanced → Additional CSS class(es). Every name used here needs a
+    `.unioncorp-icon--<name>` rule; .dev/dead-selectors.py checks it."""
+    return "unioncorp-icon--%s" % name
 
 
 def flex_row(inner, justify=None, gap=None, wrap="wrap", vertical="center"):
@@ -119,7 +126,9 @@ def icon_tile(name):
     No colour attribute, deliberately: a palette colour class is `!important`,
     and the tile has to change colour when its card is hovered.
     """
-    return paragraph(icon(name), extra_class="unioncorp-card__icon")
+    # An empty paragraph: the icon is drawn from its class. A blank placeholder
+    # keeps the editor from writing "Type / to choose a block" into the tile.
+    return paragraph("", extra_class="unioncorp-card__icon " + icon_class(name), placeholder=" ")
 
 
 def icon_card(icon_name, title, blurb):
@@ -214,8 +223,8 @@ def build_header():
     top = group(
         columns([
             column(flex_row("\n".join([
-                paragraph(icon("phone") + " +2 392 3929 210", color="overlay", size="small"),
-                paragraph(icon("clock") + " Monday – Friday 8:00AM–8:00PM", color="overlay", size="small"),
+                paragraph("+2 392 3929 210", color="overlay", size="small", extra_class="unioncorp-has-icon " + icon_class("phone")),
+                paragraph("Monday – Friday 8:00AM–8:00PM", color="overlay", size="small", extra_class="unioncorp-has-icon " + icon_class("clock")),
             ]), gap="40"), width="65%", vertical="center"),
             column(flex_row(social_links() + "\n" + toggle, justify="right", gap="30"),
                    width="35%", vertical="center"),
@@ -257,12 +266,12 @@ def build_footer():
     ]))
     col_contact = column("\n".join([
         heading("Have a question?", level=3, color="overlay", size="large"),
-        paragraph(icon("map-pin") + "<span>203 Fake St. Mountain View, San Francisco, California, USA</span>",
-                  color="on-dark", size="small", extra_class="unioncorp-detail"),
-        paragraph(icon("phone") + "<span>+2 392 3929 210</span>",
-                  color="on-dark", size="small", extra_class="unioncorp-detail"),
-        paragraph(icon("mail") + "<span>info@yourdomain.com</span>",
-                  color="on-dark", size="small", extra_class="unioncorp-detail"),
+        paragraph("203 Fake St. Mountain View, San Francisco, California, USA",
+                  color="on-dark", size="small", extra_class="unioncorp-detail " + icon_class("map-pin")),
+        paragraph("+2 392 3929 210",
+                  color="on-dark", size="small", extra_class="unioncorp-detail " + icon_class("phone")),
+        paragraph("info@yourdomain.com",
+                  color="on-dark", size="small", extra_class="unioncorp-detail " + icon_class("mail")),
     ]))
     col_posts = column("\n".join([
         heading("Recent posts", level=3, color="overlay", size="large"),
@@ -518,12 +527,12 @@ def build_contact():
     details = group("\n".join([
         heading("Contact us", level=2, align="left"),
         paragraph("We are open for questions, second opinions and new work.", color="muted"),
-        paragraph(icon("map-pin") + "<span><strong>Address</strong><br>198 West 21th Street, Suite 721, New York NY 10016</span>",
-                  color="muted", extra_class="unioncorp-detail"),
-        paragraph(icon("mail") + "<span><strong>Email</strong><br>info@yourdomain.com</span>",
-                  color="muted", extra_class="unioncorp-detail"),
-        paragraph(icon("phone") + "<span><strong>Phone</strong><br>+1 235 2355 98</span>",
-                  color="muted", extra_class="unioncorp-detail"),
+        paragraph("<strong>Address</strong><br>198 West 21th Street, Suite 721, New York NY 10016",
+                  color="muted", extra_class="unioncorp-detail " + icon_class("map-pin")),
+        paragraph("<strong>Email</strong><br>info@yourdomain.com",
+                  color="muted", extra_class="unioncorp-detail " + icon_class("mail")),
+        paragraph("<strong>Phone</strong><br>+1 235 2355 98",
+                  color="muted", extra_class="unioncorp-detail " + icon_class("phone")),
     ]), layout="constrained", gap="30")
     form = group(shortcode("[unioncorp_enquiry_form]"), layout="constrained")
     map_block = (

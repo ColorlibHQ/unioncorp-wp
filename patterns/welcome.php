@@ -17,8 +17,8 @@ defined( 'ABSPATH' ) || exit;
 <div class="wp-block-column" style="flex-basis:55%"><!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|30","left":"var:preset|spacing|30"}}}} -->
 <div class="wp-block-columns"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-unioncorp-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|30","right":"var:preset|spacing|30"},"blockGap":"var:preset|spacing|20"},"border":{"radius":"8px"}},"backgroundColor":"base","layout":{"type":"constrained"}} -->
-<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--30)"><!-- wp:paragraph {"className":"unioncorp-card__icon"} -->
-<p class="unioncorp-card__icon"><span class="unioncorp-icon unioncorp-icon--users" aria-hidden="true"></span></p>
+<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--30)"><!-- wp:paragraph {"placeholder":" ","className":"unioncorp-card__icon unioncorp-icon\u002d\u002dusers"} -->
+<p class="unioncorp-card__icon unioncorp-icon--users"></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"large"} -->
@@ -33,8 +33,8 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-unioncorp-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|30","right":"var:preset|spacing|30"},"blockGap":"var:preset|spacing|20"},"border":{"radius":"8px"}},"backgroundColor":"primary","layout":{"type":"constrained"}} -->
-<div class="wp-block-group is-style-unioncorp-card has-primary-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--30)"><!-- wp:paragraph {"className":"unioncorp-card__icon"} -->
-<p class="unioncorp-card__icon"><span class="unioncorp-icon unioncorp-icon--briefcase" aria-hidden="true"></span></p>
+<div class="wp-block-group is-style-unioncorp-card has-primary-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--30)"><!-- wp:paragraph {"placeholder":" ","className":"unioncorp-card__icon unioncorp-icon\u002d\u002dbriefcase"} -->
+<p class="unioncorp-card__icon unioncorp-icon--briefcase"></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"textColor":"on-primary","fontSize":"large"} -->
@@ -51,8 +51,8 @@ defined( 'ABSPATH' ) || exit;
 <!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|30","left":"var:preset|spacing|30"}}}} -->
 <div class="wp-block-columns"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-unioncorp-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|30","right":"var:preset|spacing|30"},"blockGap":"var:preset|spacing|20"},"border":{"radius":"8px"}},"backgroundColor":"base","layout":{"type":"constrained"}} -->
-<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--30)"><!-- wp:paragraph {"className":"unioncorp-card__icon"} -->
-<p class="unioncorp-card__icon"><span class="unioncorp-icon unioncorp-icon--heart-handshake" aria-hidden="true"></span></p>
+<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--30)"><!-- wp:paragraph {"placeholder":" ","className":"unioncorp-card__icon unioncorp-icon\u002d\u002dheart-handshake"} -->
+<p class="unioncorp-card__icon unioncorp-icon--heart-handshake"></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"large"} -->
@@ -67,8 +67,8 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-unioncorp-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|30","right":"var:preset|spacing|30"},"blockGap":"var:preset|spacing|20"},"border":{"radius":"8px"}},"backgroundColor":"base","layout":{"type":"constrained"}} -->
-<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--30)"><!-- wp:paragraph {"className":"unioncorp-card__icon"} -->
-<p class="unioncorp-card__icon"><span class="unioncorp-icon unioncorp-icon--award" aria-hidden="true"></span></p>
+<div class="wp-block-group is-style-unioncorp-card has-base-background-color has-background" style="border-radius:8px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--30)"><!-- wp:paragraph {"placeholder":" ","className":"unioncorp-card__icon unioncorp-icon\u002d\u002daward"} -->
+<p class="unioncorp-card__icon unioncorp-icon--award"></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"large"} -->

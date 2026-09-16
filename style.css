@@ -185,25 +185,31 @@ Source: https://unsplash.com/
 	mask-repeat: no-repeat;
 	-webkit-mask-size: contain;
 	mask-size: contain;
+	-webkit-mask-image: var(--unioncorp-icon);
+	mask-image: var(--unioncorp-icon);
 }
 
-.unioncorp-icon--award { -webkit-mask-image: url("assets/icons/award.svg"); mask-image: url("assets/icons/award.svg"); }
-.unioncorp-icon--briefcase { -webkit-mask-image: url("assets/icons/briefcase.svg"); mask-image: url("assets/icons/briefcase.svg"); }
-.unioncorp-icon--building-bank { -webkit-mask-image: url("assets/icons/building-bank.svg"); mask-image: url("assets/icons/building-bank.svg"); }
-.unioncorp-icon--calculator { -webkit-mask-image: url("assets/icons/calculator.svg"); mask-image: url("assets/icons/calculator.svg"); }
-.unioncorp-icon--chart-line { -webkit-mask-image: url("assets/icons/chart-line.svg"); mask-image: url("assets/icons/chart-line.svg"); }
-.unioncorp-icon--clock { -webkit-mask-image: url("assets/icons/clock.svg"); mask-image: url("assets/icons/clock.svg"); }
-.unioncorp-icon--device-desktop-analytics { -webkit-mask-image: url("assets/icons/device-desktop-analytics.svg"); mask-image: url("assets/icons/device-desktop-analytics.svg"); }
-.unioncorp-icon--heart-handshake { -webkit-mask-image: url("assets/icons/heart-handshake.svg"); mask-image: url("assets/icons/heart-handshake.svg"); }
-.unioncorp-icon--mail { -webkit-mask-image: url("assets/icons/mail.svg"); mask-image: url("assets/icons/mail.svg"); }
-.unioncorp-icon--map-pin { -webkit-mask-image: url("assets/icons/map-pin.svg"); mask-image: url("assets/icons/map-pin.svg"); }
-.unioncorp-icon--phone { -webkit-mask-image: url("assets/icons/phone.svg"); mask-image: url("assets/icons/phone.svg"); }
-.unioncorp-icon--pig-money { -webkit-mask-image: url("assets/icons/pig-money.svg"); mask-image: url("assets/icons/pig-money.svg"); }
-.unioncorp-icon--quote { -webkit-mask-image: url("assets/icons/quote.svg"); mask-image: url("assets/icons/quote.svg"); }
-.unioncorp-icon--receipt-tax { -webkit-mask-image: url("assets/icons/receipt-tax.svg"); mask-image: url("assets/icons/receipt-tax.svg"); }
-.unioncorp-icon--shield-check { -webkit-mask-image: url("assets/icons/shield-check.svg"); mask-image: url("assets/icons/shield-check.svg"); }
-.unioncorp-icon--users { -webkit-mask-image: url("assets/icons/users.svg"); mask-image: url("assets/icons/users.svg"); }
-.unioncorp-icon--alert-triangle { -webkit-mask-image: url("assets/icons/alert-triangle.svg"); mask-image: url("assets/icons/alert-triangle.svg"); }
+/*
+ * Each name only sets --unioncorp-icon, so the class can sit on the block itself
+ * (below) without masking the whole paragraph, as well as on a span.
+ */
+.unioncorp-icon--award { --unioncorp-icon: url("assets/icons/award.svg"); }
+.unioncorp-icon--briefcase { --unioncorp-icon: url("assets/icons/briefcase.svg"); }
+.unioncorp-icon--building-bank { --unioncorp-icon: url("assets/icons/building-bank.svg"); }
+.unioncorp-icon--calculator { --unioncorp-icon: url("assets/icons/calculator.svg"); }
+.unioncorp-icon--chart-line { --unioncorp-icon: url("assets/icons/chart-line.svg"); }
+.unioncorp-icon--clock { --unioncorp-icon: url("assets/icons/clock.svg"); }
+.unioncorp-icon--device-desktop-analytics { --unioncorp-icon: url("assets/icons/device-desktop-analytics.svg"); }
+.unioncorp-icon--heart-handshake { --unioncorp-icon: url("assets/icons/heart-handshake.svg"); }
+.unioncorp-icon--mail { --unioncorp-icon: url("assets/icons/mail.svg"); }
+.unioncorp-icon--map-pin { --unioncorp-icon: url("assets/icons/map-pin.svg"); }
+.unioncorp-icon--phone { --unioncorp-icon: url("assets/icons/phone.svg"); }
+.unioncorp-icon--pig-money { --unioncorp-icon: url("assets/icons/pig-money.svg"); }
+.unioncorp-icon--quote { --unioncorp-icon: url("assets/icons/quote.svg"); }
+.unioncorp-icon--receipt-tax { --unioncorp-icon: url("assets/icons/receipt-tax.svg"); }
+.unioncorp-icon--shield-check { --unioncorp-icon: url("assets/icons/shield-check.svg"); }
+.unioncorp-icon--users { --unioncorp-icon: url("assets/icons/users.svg"); }
+.unioncorp-icon--alert-triangle { --unioncorp-icon: url("assets/icons/alert-triangle.svg"); }
 
 /*
  * Pages built by 1.0.x.
@@ -259,6 +265,50 @@ Source: https://unsplash.com/
 .unioncorp-detail .unioncorp-icon {
 	margin-top: 0.25em;
 	color: var(--wp--preset--color--primary);
+}
+
+/*
+ * Icons carried by the block (1.1.2 patterns): `unioncorp-icon--<name>` in the
+ * paragraph's own classes. The editor draws a block's classes but not an empty
+ * span inside its text, so this is the form that shows while editing too, and
+ * the one Advanced → Additional CSS class(es) can change.
+ */
+.unioncorp-card__icon[class*="unioncorp-icon--"]::before,
+.unioncorp-detail[class*="unioncorp-icon--"]::before,
+.unioncorp-has-icon[class*="unioncorp-icon--"]::before {
+	content: "";
+	display: inline-block;
+	flex: none;
+	width: 1.15em;
+	height: 1.15em;
+	vertical-align: -0.2em;
+	background-color: currentColor;
+	-webkit-mask: var(--unioncorp-icon) center / contain no-repeat;
+	mask: var(--unioncorp-icon) center / contain no-repeat;
+}
+
+.unioncorp-card__icon[class*="unioncorp-icon--"]::before {
+	width: 1.75rem;
+	height: 1.75rem;
+	vertical-align: 0;
+}
+
+.unioncorp-has-icon[class*="unioncorp-icon--"]::before {
+	margin-right: 0.4em;
+}
+
+/* A detail line wraps as one block of text beside its icon. */
+.unioncorp-detail[class*="unioncorp-icon--"] {
+	display: block;
+	position: relative;
+	padding-left: 1.9em;
+}
+
+.unioncorp-detail[class*="unioncorp-icon--"]::before {
+	position: absolute;
+	left: 0;
+	top: 0.25em;
+	background-color: var(--wp--preset--color--primary);
 }
 
 .has-dark-background-color .unioncorp-detail .unioncorp-icon {

@@ -109,8 +109,11 @@ def heading(text, level=2, align=None, color=None, size=None, style=None,
 
 
 def paragraph(text, align=None, color=None, size=None, style=None,
-              extra_class=None, margin_bottom=None, max_width=None):
+              extra_class=None, margin_bottom=None, max_width=None, placeholder=None):
     data = {}
+    if placeholder is not None:
+        # Shown by the editor while the paragraph has no text; not saved into the HTML.
+        data["placeholder"] = placeholder
     css = []
     cls = []
 
