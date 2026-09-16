@@ -2,12 +2,12 @@
 /**
  * Visitor-facing dark mode.
  *
- * A restaurant site is read at night more than most — from a phone, on the way
- * somewhere, often in the dark. This adds a toggle that a visitor controls,
- * separate from whichever palette the site owner chose.
+ * Plenty of reading happens late — a proposal on a phone, a report in bed. This
+ * adds a toggle that a visitor controls, separate from whichever palette the
+ * site owner chose.
  *
  * It **lifts the active palette rather than replacing it**. A Unioncorp site set to
- * Olive stays olive in dark mode; only the grounds and the text invert. That
+ * Emerald stays green in dark mode; only the grounds and the text invert. That
  * means one set of rules works for all eight palettes, including the two that
  * are already dark — for those, dark mode is simply the default and the toggle
  * turns the lights *up*.

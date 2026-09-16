@@ -1,9 +1,8 @@
 /*
  * WooCommerce.
  *
- * Loaded only on Woo pages (see inc/woocommerce.php). A restaurant that sells
- * anything online — gift cards, a cookbook, merchandise, or the whole menu for
- * collection — ends up with WooCommerce, and Woo ships markup that answers to
+ * Loaded only on Woo pages (see inc/woocommerce.php). A firm that sells anything
+ * online — reports, courses, paid consultations — ends up with WooCommerce, and Woo ships markup that answers to
  * none of the theme's tokens: its own greens and blues, its own type scale,
  * its own button shape. Without this a shop page looks like a different site.
  *
@@ -83,7 +82,7 @@
    Buttons
    ---------------------------------------------------------------------------
    Matched to the theme's element button, including the uppercase tracking, so
-   "Add to cart" and "Book a table" are recognisably the same control.
+   "Add to cart" and "Request a consultation" are recognisably the same control.
 */
 
 .woocommerce a.button,

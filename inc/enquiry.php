@@ -2,8 +2,8 @@
 /**
  * The enquiry panel.
  *
- * A restaurant theme lives or dies on this form, so Unioncorp ships one rather than
- * requiring a plugin for the single thing every visitor came to do.
+ * A consultancy's site exists to start a conversation, so Unioncorp ships the
+ * form rather than requiring a plugin for the one thing a visitor came to do.
  *
  * It is a **shortcode**, not inline PHP in the pattern. That is not a style
  * preference: inc/front-page-setup.php expands patterns into real post content
@@ -16,7 +16,7 @@
  *
  *   - `unioncorp_enquiry_handlers` — return true from any handler to say the
  *     enquiry has been dealt with, and the built-in email is skipped. This is
- *     where a enquiry plugin, a CRM or a webhook hooks in.
+ *     where a CRM, a helpdesk or a webhook hooks in.
  *   - `unioncorp_enquiry_email_to` / `_subject` / `_body` — adjust the email
  *     the theme sends when nothing else claims the enquiry.
  *   - `unioncorp_enquiry_fields` — add, remove or relabel fields.
@@ -30,7 +30,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const UNIONCORP_RESERVATION_ACTION = 'unioncorp_enquiry';
+const UNIONCORP_ENQUIRY_ACTION = 'unioncorp_enquiry';
 
 /**
  * The fields the form asks for.
@@ -171,8 +171,8 @@ function unioncorp_enquiry_form( $atts = array() ) {
 	$out  = '<form class="unioncorp-enquiry" method="post" action="' . esc_url( unioncorp_current_url() ) . '#unioncorp-enquiry">';
 	$out .= '<div id="unioncorp-enquiry" class="unioncorp-enquiry__anchor"></div>';
 	$out .= $notice;
-	$out .= wp_nonce_field( UNIONCORP_RESERVATION_ACTION, 'unioncorp_enquiry_nonce', true, false );
-	$out .= '<input type="hidden" name="action" value="' . esc_attr( UNIONCORP_RESERVATION_ACTION ) . '">';
+	$out .= wp_nonce_field( UNIONCORP_ENQUIRY_ACTION, 'unioncorp_enquiry_nonce', true, false );
+	$out .= '<input type="hidden" name="action" value="' . esc_attr( UNIONCORP_ENQUIRY_ACTION ) . '">';
 
 	// The page to come back to, carried explicitly.
 	//
@@ -230,7 +230,7 @@ function unioncorp_enquiry_notice() {
 
 	$messages = array(
 		'sent'    => array( 'ok', __( 'Thank you — your enquiry is with us. We will reply by email shortly.', 'unioncorp' ) ),
-		'invalid' => array( 'error', __( 'Please check the form: we still need a name, an email address, a date, a time and how many of you there are.', 'unioncorp' ) ),
+		'invalid' => array( 'error', __( 'Please check the form: every field marked * needs an answer.', 'unioncorp' ) ),
 		'email'   => array( 'error', __( 'That email address does not look right.', 'unioncorp' ) ),
 		'failed'  => array( 'error', __( 'Sorry, the enquiry could not be sent. Please email or call us instead.', 'unioncorp' ) ),
 		'expired' => array( 'error', __( 'That form had been open a while and expired. Please send it again.', 'unioncorp' ) ),
@@ -256,7 +256,7 @@ function unioncorp_handle_enquiry() {
 		return;
 	}
 	// phpcs:ignore WordPress.Security.NonceVerification.Missing -- checked immediately below.
-	if ( ! isset( $_POST['action'] ) || UNIONCORP_RESERVATION_ACTION !== $_POST['action'] ) {
+	if ( ! isset( $_POST['action'] ) || UNIONCORP_ENQUIRY_ACTION !== $_POST['action'] ) {
 		return;
 	}
 
@@ -266,7 +266,7 @@ function unioncorp_handle_enquiry() {
 	$redirect = remove_query_arg( array( 'unioncorp-enquiry' ), $redirect );
 
 	$nonce = isset( $_POST['unioncorp_enquiry_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['unioncorp_enquiry_nonce'] ) ) : '';
-	if ( ! wp_verify_nonce( $nonce, UNIONCORP_RESERVATION_ACTION ) ) {
+	if ( ! wp_verify_nonce( $nonce, UNIONCORP_ENQUIRY_ACTION ) ) {
 		unioncorp_enquiry_redirect( $redirect, 'expired' );
 	}
 

@@ -2,11 +2,10 @@
 /**
  * WooCommerce support.
  *
- * A restaurant that sells gift cards, a cookbook or collection orders ends up
- * with WooCommerce, and Woo's markup answers to none of the theme's tokens.
- * This declares support and loads the mapping stylesheet — but only on the
- * pages that need it, so a site with a shop of three gift cards does not pay
- * for shop CSS on its menu page.
+ * A firm that sells reports, courses or paid consultations ends up with
+ * WooCommerce, and Woo's markup answers to none of the theme's tokens. This
+ * declares support and loads the mapping stylesheet — but only on the pages
+ * that need it, so a shop of three products does not add shop CSS to every page.
  *
  * @package Unioncorp
  */

@@ -2,7 +2,7 @@
 /**
  * Form styling, for Unioncorp's own form and for whichever plugin a site uses.
  *
- * A restaurant site almost always ends up with a form plugin, and every one of
+ * A business site often ends up with a form plugin as well, and every one of
  * them ships markup that ignores the theme: its own input borders, its own
  * button colours, its own spacing. Rather than let a Contact Form 7 block sit
  * in the middle of a Unioncorp page looking like a different website, the theme
