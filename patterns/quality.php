@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button {"className":"unioncorp-video"} -->
-<div class="wp-block-button unioncorp-video"><a class="wp-block-button__link wp-element-button" href="https://www.youtube.com/watch?v=9ZZ7pq331Dc">Watch the video</a></div>
+<div class="wp-block-button unioncorp-video"><a class="wp-block-button__link wp-element-button" href="https://www.youtube.com/watch?v=FkJT-6Ta60s">Watch the video</a></div>
 <!-- /wp:button -->
 
 <!-- wp:button {"className":"is-style-unioncorp-ghost"} -->

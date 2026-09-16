@@ -394,7 +394,7 @@ def build_quality():
                   color="overlay"),
         # unioncorp-video: assets/js/interactions.js plays the video in a popup.
         # Without JavaScript it is an ordinary link to the video.
-        buttons([button("Watch the video", "https://www.youtube.com/watch?v=9ZZ7pq331Dc",
+        buttons([button("Watch the video", "https://www.youtube.com/watch?v=FkJT-6Ta60s",
                         extra_class="unioncorp-video"),
                  button("Read our case studies", "#", style="unioncorp-ghost")]),
     ])
