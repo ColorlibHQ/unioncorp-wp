@@ -64,14 +64,17 @@ $find_image = static function ( $file ) {
 	);
 };
 
+// The 1.1 screenshots. They carry new names because `wp media import` never
+// overwrites: an existing name is saved as `-1.jpg`, which this lookup would not
+// find, and the 1.0 set would quietly stay on the page.
 $wanted = array(
-	'card'     => 'unioncorp-free-business-wordpress-theme.jpg',
-	'home'     => 'unioncorp-wordpress-theme-home.jpg',
-	'services' => 'unioncorp-wordpress-theme-services.jpg',
-	'enquiry'  => 'unioncorp-wordpress-theme-enquiry.jpg',
-	'palettes' => 'unioncorp-wordpress-theme-palettes.jpg',
-	'dark'     => 'unioncorp-wordpress-theme-dark-mode.jpg',
-	'blog'     => 'unioncorp-wordpress-theme-blog.jpg',
+	'card'     => 'unioncorp-free-finance-wordpress-theme.jpg',
+	'home'     => 'unioncorp-block-theme-home.jpg',
+	'services' => 'unioncorp-block-theme-services.jpg',
+	'enquiry'  => 'unioncorp-block-theme-enquiry-form.jpg',
+	'palettes' => 'unioncorp-block-theme-colour-palettes.jpg',
+	'dark'     => 'unioncorp-block-theme-dark-mode.jpg',
+	'blog'     => 'unioncorp-block-theme-blog.jpg',
 );
 
 $img     = array();
@@ -127,15 +130,26 @@ $features = array(
 	array( 'moon-o', 'Dark mode', 'A switch for the visitor, separate from the palette you chose. It lifts the palette rather than replacing it, so an Emerald site stays green.' ),
 	array( 'plug', 'Your form plugin, styled', 'Contact Form 7, WPForms, Gravity Forms, Fluent Forms, Forminator and Ninja Forms take on the theme’s colours and spacing instead of looking like another website.' ),
 	array( 'shopping-cart', 'WooCommerce ready', 'Styled if you install WooCommerce, and it loads nothing at all if you do not.' ),
+	array( 'magic', 'Motion that stays out of the way', 'Sections rise into view as you scroll, figures count up, the video plays in a popup and case studies open in a lightbox. Nothing on the first screen waits for it, and visitors who prefer reduced motion see none of it.' ),
+	array( 'star-o', 'Icons that follow the palette', 'Service cards, contact details, the top bar and post dates carry Tabler icons. They take the palette’s colours, so they change with every style and with dark mode.' ),
+	array( 'mobile', 'A header that holds its line', 'Seven links, a logo and a button stay on one row down to laptop widths, then fold into a menu button, with no second row in between.' ),
 );
 
-$feature_boxes = '';
-foreach ( $features as $f ) {
-	list( $icon, $heading, $body ) = $f;
-	$feature_boxes .= '[vc_column width="1/3"][vcex_icon_box style="two" heading="' . esc_attr( $heading ) . '" heading_type="h3"'
-		. ' icon="fa fa-' . $icon . '" icon_color="' . $accent . '" icon_size="28px" heading_size="20px"'
-		. ' content_font_size="15px" css=".vc_custom_uc_f_' . sanitize_key( $icon ) . '{margin-bottom:26px !important;}"]'
-		. $body . '[/vcex_icon_box][/vc_column]';
+// Three to a row, each row its own [vc_row]. WPBakery columns are floats: nine
+// thirds in one row snag on the tallest box above them, and the grid staggers
+// with empty cells.
+$feature_rows = '';
+foreach ( array_chunk( $features, 3 ) as $r => $row ) {
+	$last          = ( $r === (int) ceil( count( $features ) / 3 ) - 1 );
+	$feature_rows .= '[vc_row css=".vc_custom_uc05' . ( $r + 1 ) . '{padding-bottom:' . ( $last ? '40' : '0' ) . 'px !important;}"]';
+	foreach ( $row as $f ) {
+		list( $icon, $heading, $body ) = $f;
+		$feature_rows .= '[vc_column width="1/3"][vcex_icon_box style="two" heading="' . esc_attr( $heading ) . '" heading_type="h3"'
+			. ' icon="fa fa-' . $icon . '" icon_color="' . $accent . '" icon_size="28px" heading_size="20px"'
+			. ' content_font_size="15px" css=".vc_custom_uc_f_' . sanitize_key( $icon ) . '{margin-bottom:26px !important;}"]'
+			. $body . '[/vcex_icon_box][/vc_column]';
+	}
+	$feature_rows .= '[/vc_row]';
 }
 
 $faqs = array(
@@ -144,6 +158,7 @@ $faqs = array(
 	array( 'Which form plugins does it style?', 'Contact Form 7, WPForms, Gravity Forms, Fluent Forms, Forminator and Ninja Forms are mapped onto the theme’s own colours and spacing, so a form block does not look like a different website.' ),
 	array( 'Can I change the colours?', 'Eight palettes and five type pairings ship with the theme, and each is a one-click choice in the Site Editor under Styles. Beyond that, every colour in the theme is a palette entry you can edit there.' ),
 	array( 'Can I turn dark mode off?', 'Yes. Add <code>add_filter( \'unioncorp_enable_dark_mode\', \'__return_false\' );</code> to a child theme or a small plugin.' ),
+	array( 'Can I turn the animations off?', 'Yes. Add <code>add_filter( \'unioncorp_enable_scroll_animations\', \'__return_false\' );</code> and sections stop fading in and figures stop counting up; the video popup keeps working. Visitors whose system asks for reduced motion never see the animations either way.' ),
 	array( 'Is it translation ready?', 'Yes. Every string is translatable and <code>languages/unioncorp.pot</code> is included.' ),
 	array( 'Does it check for updates?', 'Yes, twice a day, because it is distributed outside the WordPress.org theme directory. It sends the theme, WordPress and PHP versions, the locale, whether the site is a multisite, and an identifier derived from the site’s address with the site’s own secret key, so it cannot be turned back into the address. The <code>unioncorp_check_for_updates</code> filter switches it off.' ),
 );
@@ -165,6 +180,7 @@ $specs = array(
 	'Templates'    => '14, plus 3 template parts',
 	'Styles'       => '8 colour palettes × 5 type pairings',
 	'Fonts'        => 'Poppins and Inter, self-hosted',
+	'Icons'        => 'Tabler Icons (MIT), drawn in the palette’s colours',
 	'Form plugins' => 'Contact Form 7, WPForms, Gravity Forms, Fluent Forms, Forminator, Ninja Forms',
 	'Build step'   => 'None — no npm, no SCSS',
 );
@@ -203,7 +219,7 @@ $content = "[vc_row css=\".vc_custom_uc001{padding-top:64px !important;padding-b
 		$img['enquiry'] ) . "\n\n"
 
 	. $section( '02', true, 'Services, case studies and a team, as blocks',
-		'Eight service cards, a case-study grid, pricing plans, counters, testimonials and a team four across. Each one is a pattern: insert it, change the words and the photographs, and it stays exactly as editable as a paragraph.',
+		'Eight service cards with icons, a case-study gallery that opens in a lightbox, pricing plans, counters that count up, testimonials and a team four across. Each one is a pattern: insert it, change the words and the photographs, and it stays exactly as editable as a paragraph.',
 		$img['services'] ) . "\n\n"
 
 	. $section( '03', false, 'Eight palettes, checked before release',
@@ -216,7 +232,7 @@ $content = "[vc_row css=\".vc_custom_uc001{padding-top:64px !important;padding-b
 
 	. "[vc_row css=\".vc_custom_uc050{padding-top:56px !important;padding-bottom:16px !important;}\"][vc_column width=\"1/1\"]"
 	. '[vcex_heading text="What you get" tag="h2" font_size="34px" text_align="center" bottom_margin="34px" font_weight="700"][/vc_column][/vc_row]'
-	. "[vc_row css=\".vc_custom_uc051{padding-bottom:40px !important;}\"]{$feature_boxes}[/vc_row]\n\n"
+	. $feature_rows . "\n\n"
 
 	. $section( '06', true, 'It has a blog, too',
 		'Advice, market notes, news from the firm. Archives, single posts, categories, tags, author pages, search and a 404 are all designed rather than inherited, with an optional sidebar layout for posts and pages.',

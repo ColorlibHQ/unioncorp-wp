@@ -26,7 +26,7 @@ $page_url = 'https://colorlib.com/wp/themes/unioncorp/';
 // literal URL: `wp media import` does not overwrite, so a name that already
 // exists becomes `-1.jpg` and a hardcoded URL quietly points at the wrong file.
 global $wpdb;
-$card_file = 'unioncorp-free-business-wordpress-theme.jpg';
+$card_file = 'unioncorp-free-finance-wordpress-theme.jpg';
 $card_att  = (int) $wpdb->get_var(
 	$wpdb->prepare(
 		"SELECT post_id FROM {$wpdb->postmeta}
