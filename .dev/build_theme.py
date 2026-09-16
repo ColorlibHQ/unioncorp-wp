@@ -162,7 +162,11 @@ CONTRAST_CHECKS = [
     # 2.49:1 there and `primary` 2.64:1, so both are named here to stop a future
     # palette reintroducing them.
     ("on-dark", "dark"),
+    # Every button label, resting and hovered. theme.json labels buttons with
+    # `on-primary`, so the pair has to hold on the hover fill as well as the
+    # resting one — and the call-to-action band sets the same pair inverted.
     ("on-primary", "primary"),
+    ("on-primary", "primary-deep"),
 ]
 
 
@@ -289,12 +293,18 @@ def build_styles():
             ("link", od(("color", od(("text", var("primary")))),
                         (":hover", od(("color", od(("text", var("primary-deep")))))))),
             ("button", od(
-                ("color", od(("background", var("primary")), ("text", var("overlay")))),
+                # The label is `on-primary`, not `overlay`. They are the same white
+                # on six palettes, but `overlay` is deliberately never redefined in
+                # dark mode — so once scheme.css lifts `primary` to a light fill, a
+                # white `overlay` label on it is unreadable. `on-primary` turns
+                # over with the fill, and the audit holds the pair in every
+                # palette and both schemes.
+                ("color", od(("background", var("primary")), ("text", var("on-primary")))),
                 ("typography", od(("fontWeight", "600"), ("fontSize", fs("small")))),
                 ("border", od(("radius", "4px"))),
                 ("spacing", od(("padding", od(("top", "0.9rem"), ("bottom", "0.9rem"),
                                               ("left", "1.75rem"), ("right", "1.75rem"))))),
-                (":hover", od(("color", od(("background", var("primary-deep")), ("text", var("overlay")))))),
+                (":hover", od(("color", od(("background", var("primary-deep")), ("text", var("on-primary")))))),
             )),
         )),
         ("blocks", od(
@@ -324,15 +334,15 @@ def build_theme():
 
 
 def build_color_variation(slug, name, colors):
-    label = button_text(colors)
+    # No button override. theme.json labels every button `on-primary`, and each
+    # palette defines that slug, so a variation only has to supply its palette.
+    # The per-palette override this replaces picked `overlay` or `dark` by
+    # measurement; `on-primary` resolves to exactly those values in light mode,
+    # and unlike `overlay` it turns over with the fill in dark mode.
     return od(
         ("$schema", "https://schemas.wp.org/trunk/theme.json"),
         ("version", 3), ("title", name),
         ("settings", od(("color", od(("palette", palette(colors)))))),
-        ("styles", od(("elements", od(("button", od(
-            ("color", od(("background", var("primary")), ("text", var(label)))),
-            (":hover", od(("color", od(("background", var("primary-deep")), ("text", var(label)))))),
-        )))))),
     )
 
 
@@ -355,20 +365,106 @@ def write(path, data):
     return path
 
 
+def _mix_with_white(hex_colour, percent):
+    """CSS `color-mix(in srgb, <colour> <percent>%, white)`, per channel."""
+    channels = [int(hex_colour[i:i + 2], 16) for i in (1, 3, 5)]
+    share = percent / 100
+    return "#" + "".join("%02x" % round(c * share + 255 * (1 - share)) for c in channels)
+
+
+def _dark_scheme():
+    """What assets/css/scheme.css does to the palette, read from the file itself.
+
+    Read rather than restated: the percentages live in the CSS, and a second
+    copy here would drift from it. It also refuses any colour slug the palette
+    does not define. Dark mode once mixed a `flame` slug this theme never had;
+    the declaration went invalid, `primary` stopped resolving, every button
+    rendered as bare text — and this audit passed, because nothing in it looked
+    at scheme.css.
+    """
+    import re
+
+    css = open("assets/css/scheme.css", encoding="utf-8").read()
+    defined = {slug for _, slug, _ in PALETTE}
+    referenced = set(re.findall(r"var\(--wp--preset--color--([a-z0-9-]+)\)", css))
+    unknown = sorted(referenced - defined)
+    if unknown:
+        raise SystemExit("scheme.css reads colour slugs the palette does not define: %s"
+                         % ", ".join(unknown))
+
+    def mix(slug):
+        m = re.search(r"--wp--preset--color--%s:\s*color-mix\(in srgb,\s*"
+                      r"var\(--wp--preset--color--([a-z0-9-]+)\)\s*(\d+)%%,\s*white\)"
+                      % re.escape(slug), css)
+        if not m:
+            raise SystemExit("scheme.css: cannot read the dark-mode `%s` mix" % slug)
+        return m.group(1), int(m.group(2))
+
+    def fixed(slug):
+        m = re.search(r"--wp--preset--color--%s:\s*(#[0-9a-fA-F]{6})\s*;" % re.escape(slug), css)
+        if not m:
+            raise SystemExit("scheme.css: cannot read the dark-mode `%s`" % slug)
+        return m.group(1).lower()
+
+    return {
+        "primary": mix("primary"), "primary-deep": mix("primary-deep"),
+        "on-primary": fixed("on-primary"), "base": fixed("base"), "surface": fixed("surface"),
+        "contrast": fixed("contrast"), "muted": fixed("muted"),
+    }
+
+
 def audit():
     problems = []
-    print("  palette      button label   worst ratio")
+
+    print("  light      label        resting  hover")
     for slug, (name, colors) in sorted(COLOR_SETS.items()):
         for fg, bg in CONTRAST_CHECKS:
             ratio = contrast_ratio(colors[fg], colors[bg])
             if ratio < 4.5:
                 problems.append("%s: %s on %s is %.2f" % (name, fg, bg, ratio))
-        label = button_text(colors)
-        if label is None:
-            problems.append("%s: no readable button label" % name)
-        else:
-            worst = min(contrast_ratio(colors[label], colors[g]) for g in ("primary", "primary-deep"))
-            print("  %-12s %-14s %.2f" % (name, label, worst))
+        # Buttons are labelled `on-primary`. button_text() still finds the best
+        # label on offer, which checks the switch: `on-primary` must never be a
+        # worse label than the one the old per-palette override chose.
+        resting = contrast_ratio(colors["on-primary"], colors["primary"])
+        hover = contrast_ratio(colors["on-primary"], colors["primary-deep"])
+        best = button_text(colors)
+        if best is not None:
+            best_worst = min(contrast_ratio(colors[best], colors[g]) for g in ("primary", "primary-deep"))
+            if min(resting, hover) + 0.005 < best_worst:
+                problems.append("%s: on-primary (%.2f) is a worse label than %s (%.2f)"
+                                % (name, min(resting, hover), best, best_worst))
+        print("  %-10s %-12s %6.2f  %6.2f" % (name, "on-primary", resting, hover))
+
+    dark = _dark_scheme()
+    source, share = dark["primary"]
+    deep_source, deep_share = dark["primary-deep"]
+    print("\n  dark mode, as scheme.css applies it: primary = %s %d%% + white, primary-deep = %s %d%% + white"
+          % (source, share, deep_source, deep_share))
+    print("  dark       text/base  text/surf  link-hover  label  label-hover  boundary")
+    for slug, (name, colors) in sorted(COLOR_SETS.items()):
+        fill = _mix_with_white(colors[source], share)
+        deep = _mix_with_white(colors[deep_source], deep_share)
+        measured = (
+            ("primary text on base", contrast_ratio(fill, dark["base"]), 4.5),
+            ("primary text on surface", contrast_ratio(fill, dark["surface"]), 4.5),
+            ("hovered link on base", contrast_ratio(deep, dark["base"]), 4.5),
+            ("button label on its fill", contrast_ratio(dark["on-primary"], fill), 4.5),
+            ("button label on the hover fill", contrast_ratio(dark["on-primary"], deep), 4.5),
+            # WCAG 1.4.11. A button has to be visible as a button, not merely
+            # carry a readable label — the exact case the text checks let through.
+            ("button fill against the page",
+             min(contrast_ratio(fill, dark["base"]), contrast_ratio(fill, dark["surface"])), 3.0),
+        )
+        for label, value, need in measured:
+            if value < need:
+                problems.append("%s (dark): %s is %.2f, needs %.1f" % (name, label, value, need))
+        print("  %-10s %9.2f  %9.2f  %10.2f  %5.2f  %11.2f  %8.2f"
+              % ((name,) + tuple(v for _, v, _ in measured)))
+    for fg, bg in (("contrast", "base"), ("contrast", "surface"), ("muted", "base"), ("muted", "surface")):
+        ratio = contrast_ratio(dark[fg], dark[bg])
+        if ratio < 4.5:
+            problems.append("dark: %s on %s is %.2f" % (fg, bg, ratio))
+
     # The brand colours are decorative here, and that is a deliberate decision:
     # say so rather than let someone rediscover it.
     print("\n  for the record: the template's #4f86f9 is %.2f:1 on white and #3bd381 is %.2f:1 —"

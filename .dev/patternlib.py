@@ -142,9 +142,21 @@ def paragraph(text, align=None, color=None, size=None, style=None,
     )
 
 
-def button(text, url="#", style=None, width=None, extra_class=None):
+def button(text, url="#", style=None, width=None, extra_class=None, background=None, text_color=None):
+    """A core/button.
+
+    `background` and `text_color` are palette slugs. A button on the page ground
+    needs neither — theme.json styles it `primary` with an `on-primary` label —
+    but a button sitting on a `primary` ground inherits a fill identical to what
+    is behind it and vanishes. The call-to-action band did exactly that. Name
+    the colours for any button that is not on the page ground.
+
+    The colour parameter is `text_color`, not `text`: `text` is already the
+    label, and reusing the name would silently put the label into the colour.
+    """
     data = {}
     cls = ["wp-block-button"]
+    link = ["wp-block-button__link"]
     if style:
         data["className"] = "is-style-" + style
         cls.append("is-style-" + style)
@@ -157,10 +169,25 @@ def button(text, url="#", style=None, width=None, extra_class=None):
     if width:
         data["width"] = width
         cls.append("has-custom-width wp-block-button__width-%d" % width)
+    if background:
+        data["backgroundColor"] = background
+    if text_color:
+        data["textColor"] = text_color
+    # Core's save() order. normalize-blocks.mjs re-serialises anyway, but
+    # writing it right the first time keeps that pass a no-op.
+    if text_color:
+        link.append("has-%s-color" % text_color)
+    if background:
+        link.append("has-%s-background-color" % background)
+    if text_color:
+        link.append("has-text-color")
+    if background:
+        link.append("has-background")
+    link.append("wp-element-button")
     return (
         '<!-- wp:button%s -->\n'
-        '<div class="%s"><a class="wp-block-button__link wp-element-button" href="%s">%s</a></div>\n'
-        '<!-- /wp:button -->' % (attrs(data), classes(*cls), url, esc(text))
+        '<div class="%s"><a class="%s" href="%s">%s</a></div>\n'
+        '<!-- /wp:button -->' % (attrs(data), classes(*cls), classes(*link), url, esc(text))
     )
 
 

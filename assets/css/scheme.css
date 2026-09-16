@@ -33,18 +33,34 @@
 /*
  * The brand colour has to hold its own against a dark ground.
  *
- * Each palette's `primary` was chosen to clear AA against white; against
- * #15161a several of them do not. Mixing the palette's own `flame` toward
- * white lifts each one without flattening the differences between them.
+ * Each palette's `primary` is chosen to clear AA against white; against
+ * #15161a most of them do not. Mixing the palette's own `accent` toward white
+ * lifts each one without flattening the differences between them.
  *
- * 64% is measured, not chosen by eye: at 82% the worst palette (Charcoal)
- * came out at 3.30:1 and Ember's script eyebrows at 4.44:1 on `surface`. At
- * 64% the worst across all eight is 5.06:1. On a dark ground hover *brightens*
+ * The slug it mixes is load-bearing. This file came from a theme whose palette
+ * has a `flame` slug, and this one does not. A colour-mix on an undefined
+ * variable makes the whole declaration invalid, so `primary` stopped resolving
+ * and everything reading it fell back: in dark mode every button on the site
+ * rendered as bare text, while every text-contrast check still passed because
+ * the labels stayed readable against the page. build_theme.py now refuses to
+ * build if this file names a slug the palette does not define.
+ *
+ * 78% is measured across the eight palettes, not chosen by eye. At 90% the
+ * worst `primary` text on `surface` is 4.37:1 and fails; 84% passes at 4.82:1
+ * with no margin; 78% keeps every pairing at 5.3:1 or better while still
+ * reading as the palette's own colour. On a dark ground hover *brightens*
  * rather than deepens, so primary-deep carries more white, not less.
+ *
+ * `on-primary` has to turn over with it. A lifted `primary` is a light fill, so
+ * a white label on it is unreadable — correcting the fill alone would have
+ * turned six palettes' invisible buttons into unreadable ones. `on-primary`
+ * only ever appears paired with `primary` (button labels, and the
+ * call-to-action band), so redefining it here reaches nothing else.
  */
 .unioncorp-dark {
-	--wp--preset--color--primary: color-mix(in srgb, var(--wp--preset--color--flame) 64%, white);
-	--wp--preset--color--primary-deep: color-mix(in srgb, var(--wp--preset--color--flame) 48%, white);
+	--wp--preset--color--primary: color-mix(in srgb, var(--wp--preset--color--accent) 78%, white);
+	--wp--preset--color--primary-deep: color-mix(in srgb, var(--wp--preset--color--accent) 62%, white);
+	--wp--preset--color--on-primary: #15161a;
 }
 
 /* Photographs are a touch bright against a dark page. */

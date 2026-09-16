@@ -27,8 +27,8 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:column {"verticalAlignment":"center","width":"30%"} -->
 <div class="wp-block-column is-vertically-aligned-center" style="flex-basis:30%"><!-- wp:buttons {"layout":{"type":"flex","justifyContent":"right"}} -->
-<div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#">Get started</a></div>
+<div class="wp-block-buttons"><!-- wp:button {"backgroundColor":"on-primary","textColor":"primary"} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-primary-color has-on-primary-background-color has-text-color has-background wp-element-button" href="#">Get started</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:column --></div>

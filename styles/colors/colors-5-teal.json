@@ -72,21 +72,5 @@
 				}
 			]
 		}
-	},
-	"styles": {
-		"elements": {
-			"button": {
-				"color": {
-					"background": "var(--wp--preset--color--primary)",
-					"text": "var(--wp--preset--color--overlay)"
-				},
-				":hover": {
-					"color": {
-						"background": "var(--wp--preset--color--primary-deep)",
-						"text": "var(--wp--preset--color--overlay)"
-					}
-				}
-			}
-		}
 	}
 }

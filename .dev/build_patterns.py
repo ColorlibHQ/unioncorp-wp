@@ -367,12 +367,17 @@ def build_blog_latest():
 
 
 def build_cta():
+    # The band is `primary`, and a plain button is also `primary` — so it sat
+    # 1:1 on its own ground and read as loose text. Inverting it to an
+    # `on-primary` fill with a `primary` label uses the one pair the audit
+    # guarantees in every palette and in dark mode, where the same pair flips.
     inner = columns([
         column(group("\n".join([
             eyebrow("Prepare for takeoff", align="left", color="on-primary"),
             heading("Looking for a business opportunity?", level=2, align="left", color="on-primary"),
         ]), layout="constrained", gap="20"), width="70%", vertical="center"),
-        column(buttons([button("Get started", "#")], align="right"), width="30%", vertical="center"),
+        column(buttons([button("Get started", "#", background="on-primary", text_color="primary")],
+                       align="right"), width="30%", vertical="center"),
     ], gap="40", vertical="center")
     write("cta", "Call to action band",
           group(inner, align="full", background="primary", text="on-primary", padding_y="60", layout="constrained"),
