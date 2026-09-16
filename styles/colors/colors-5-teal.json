@@ -1,0 +1,82 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Teal",
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"name": "Base",
+					"slug": "base",
+					"color": "#ffffff"
+				},
+				{
+					"name": "Surface",
+					"slug": "surface",
+					"color": "#f4fafb"
+				},
+				{
+					"name": "Contrast",
+					"slug": "contrast",
+					"color": "#07242a"
+				},
+				{
+					"name": "Muted",
+					"slug": "muted",
+					"color": "#4d6970"
+				},
+				{
+					"name": "Primary",
+					"slug": "primary",
+					"color": "#0f6f7f"
+				},
+				{
+					"name": "Primary deep",
+					"slug": "primary-deep",
+					"color": "#0a5460"
+				},
+				{
+					"name": "Accent",
+					"slug": "accent",
+					"color": "#26a5b8"
+				},
+				{
+					"name": "Success",
+					"slug": "success",
+					"color": "#1f8a5b"
+				},
+				{
+					"name": "Dark",
+					"slug": "dark",
+					"color": "#04252c"
+				},
+				{
+					"name": "Divider",
+					"slug": "divider",
+					"color": "#d3e7ea"
+				},
+				{
+					"name": "Overlay",
+					"slug": "overlay",
+					"color": "#ffffff"
+				}
+			]
+		}
+	},
+	"styles": {
+		"elements": {
+			"button": {
+				"color": {
+					"background": "var(--wp--preset--color--primary)",
+					"text": "var(--wp--preset--color--overlay)"
+				},
+				":hover": {
+					"color": {
+						"background": "var(--wp--preset--color--primary-deep)",
+						"text": "var(--wp--preset--color--overlay)"
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,132 @@
+/*
+ * Dark mode.
+ *
+ * This LIFTS the active palette rather than replacing it. An Olive site stays
+ * olive; only the grounds and the text invert. That is what lets one file
+ * serve all eight palettes — and it is why the rules redefine the preset
+ * variables themselves rather than restyling components: everything in the
+ * theme, patterns and user content alike, already reads from those variables.
+ *
+ * `--wp--preset--color--overlay` is deliberately NOT touched. It is near-white
+ * in every palette because it sits on photographs and on the `dark` ground,
+ * both of which stay dark here.
+ */
+
+.unioncorp-dark {
+	color-scheme: dark;
+
+	/* The page turns over: what was the near-black text colour becomes the
+	   ground, and vice versa. `color-mix` keeps the palette's own hue in the
+	   greys rather than dropping to neutral, which is what stops a dark Olive
+	   site looking like a dark Charcoal one. */
+	--wp--preset--color--base: #15161a;
+	--wp--preset--color--surface: #1d1f24;
+	--wp--preset--color--contrast: #f2f1ef;
+	--wp--preset--color--muted: #a9a6a1;
+	--wp--preset--color--divider: #34363d;
+
+	/* `dark` is the footer's ground. On a dark page it has to go deeper than
+	   the page, or the footer stops being a separate thing. */
+	--wp--preset--color--dark: #0d0e11;
+}
+
+/*
+ * The brand colour has to hold its own against a dark ground.
+ *
+ * Each palette's `primary` was chosen to clear AA against white; against
+ * #15161a several of them do not. Mixing the palette's own `flame` toward
+ * white lifts each one without flattening the differences between them.
+ *
+ * 64% is measured, not chosen by eye: at 82% the worst palette (Charcoal)
+ * came out at 3.30:1 and Ember's script eyebrows at 4.44:1 on `surface`. At
+ * 64% the worst across all eight is 5.06:1. On a dark ground hover *brightens*
+ * rather than deepens, so primary-deep carries more white, not less.
+ */
+.unioncorp-dark {
+	--wp--preset--color--primary: color-mix(in srgb, var(--wp--preset--color--flame) 64%, white);
+	--wp--preset--color--primary-deep: color-mix(in srgb, var(--wp--preset--color--flame) 48%, white);
+}
+
+/* Photographs are a touch bright against a dark page. */
+@media (prefers-reduced-motion: no-preference) {
+	.unioncorp-dark img:not(.wp-block-cover__image-background):not([src$=".svg"]) {
+		filter: brightness(0.94);
+		transition: filter 0.2s ease;
+	}
+}
+
+/*
+ * The toggle itself.
+ *
+ * It is a core/button with a class, so it can be dropped anywhere in the
+ * editor and inherits the theme's button styling.
+ */
+.wp-block-button.unioncorp-scheme-toggle > .wp-block-button__link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	/* The ghost style it borrows draws a bottom border to mark a text link.
+	   Under an icon with no text that reads as a stray mark, so it goes. */
+	border: 0;
+	padding: 0;
+	/* 44px square: this is the one control on the page that is only an icon,
+	   and a 16px tap target is not a tap target. */
+	width: 44px;
+	height: 44px;
+	min-width: 0;
+	border-radius: 4px;
+}
+
+.wp-block-button.unioncorp-scheme-toggle > .wp-block-button__link:hover,
+.wp-block-button.unioncorp-scheme-toggle > .wp-block-button__link:focus-visible {
+	background-color: color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.wp-block-button.unioncorp-scheme-toggle > .wp-block-button__link::before {
+	width: 1.15em;
+	height: 1.15em;
+}
+
+.wp-block-button.unioncorp-scheme-toggle > .wp-block-button__link::before {
+	content: "";
+	width: 1em;
+	height: 1em;
+	flex: 0 0 auto;
+	background-color: currentColor;
+	/* A moon, and a sun in dark mode. Masked rather than an icon font or an
+	   inline SVG, so it takes the button's colour automatically and costs no
+	   extra request. */
+	-webkit-mask: var(--unioncorp-scheme-icon) center / contain no-repeat;
+	mask: var(--unioncorp-scheme-icon) center / contain no-repeat;
+	--unioncorp-scheme-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z'/%3E%3C/svg%3E");
+}
+
+.unioncorp-dark .wp-block-button.unioncorp-scheme-toggle > .wp-block-button__link::before {
+	--unioncorp-scheme-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1' stroke='black' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/*
+ * Form controls do not inherit the page's colours, so they have to be told.
+ * Without this the reservation form stays a block of white in a dark page.
+ */
+.unioncorp-dark .unioncorp-field__control,
+.unioncorp-dark .wp-block-search__input,
+.unioncorp-dark .wp-block-post-comments-form input,
+.unioncorp-dark .wp-block-post-comments-form textarea {
+	background-color: var(--wp--preset--color--surface);
+	border-color: var(--wp--preset--color--divider);
+	color: var(--wp--preset--color--contrast);
+}
+
+/* A native date or time picker draws its own indicator in black. */
+.unioncorp-dark input[type="date"]::-webkit-calendar-picker-indicator,
+.unioncorp-dark input[type="time"]::-webkit-calendar-picker-indicator {
+	filter: invert(1);
+}
+
+/* The card and elevated section styles sit on `base`, which has moved. */
+.unioncorp-dark .is-style-card,
+.unioncorp-dark .is-style-elevated {
+	background-color: var(--wp--preset--color--surface);
+	border-color: var(--wp--preset--color--divider);
+}

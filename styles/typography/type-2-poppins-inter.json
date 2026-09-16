@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Poppins headings, Inter text",
+	"styles": {
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--inter)"
+		},
+		"elements": {
+			"heading": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--poppins)"
+				}
+			}
+		}
+	}
+}

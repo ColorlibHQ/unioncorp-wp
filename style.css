@@ -1,0 +1,69 @@
+/*
+Theme Name: Unioncorp
+Theme URI: https://colorlib.com/wp/themes/unioncorp/
+Author: Colorlib
+Author URI: https://colorlib.com/
+Description: A block theme for finance, consulting and professional services. Services, case studies, pricing plans, team profiles, testimonials and an enquiry form that needs no plugin — eight colour palettes, five type pairings, visitor dark mode and WooCommerce support. Full site editing throughout.
+Requires at least: 6.6
+Tested up to: 7.1
+Requires PHP: 7.4
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Update URI: https://updates.colorlib.com/theme/unioncorp.json
+Text Domain: unioncorp
+Tags: business, portfolio, blog, full-site-editing, block-patterns, block-styles, template-editing, wide-blocks, accessibility-ready, translation-ready, custom-colors, custom-menu, custom-logo, featured-images, threaded-comments, one-column, two-columns, right-sidebar, rtl-language-support, sticky-post, theme-options
+
+Unioncorp WordPress Theme, (C) 2026 Colorlib.
+Unioncorp is distributed under the terms of the GNU GPL v2 or later.
+
+Unioncorp bundles the following third-party resources:
+
+Poppins and Inter
+License: SIL Open Font License 1.1, https://openfontlicense.org/
+Source: https://fontsource.org/
+
+Photographs
+License: Unsplash License, https://unsplash.com/license
+Source: https://unsplash.com/
+*/
+
+/*
+ * A block theme styles itself from theme.json. What lives here is only what
+ * theme.json cannot express: the handful of component styles the design needs
+ * and the block style variations registered in functions.php.
+ */
+
+/* Flaticon: the icon set the services and feature cards use. Only the woff2
+   ships; the eot/ttf/svg faces the original carried were for browsers this
+   theme does not support. */
+@font-face {
+	font-family: "Flaticon";
+	src: url("assets/fonts/flaticon/Flaticon.woff2") format("woff2");
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+
+[class^="flaticon-"]::before,
+[class*=" flaticon-"]::before {
+	font-family: Flaticon;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 1em;
+	line-height: 1;
+	speak: never;
+	-webkit-font-smoothing: antialiased;
+}
+
+.flaticon-research::before { content: "\f100"; }
+.flaticon-tax::before { content: "\f101"; }
+.flaticon-recession::before { content: "\f102"; }
+.flaticon-risk::before { content: "\f103"; }
+.flaticon-money::before { content: "\f104"; }
+.flaticon-accountant::before { content: "\f105"; }
+.flaticon-accounting::before { content: "\f106"; }
+.flaticon-financial::before { content: "\f107"; }
+.flaticon-insurance::before { content: "\f108"; }
+.flaticon-retirement-plan::before { content: "\f109"; }
+.flaticon-technology::before { content: "\f10a"; }

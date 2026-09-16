@@ -1,0 +1,326 @@
+/*
+ * WooCommerce.
+ *
+ * Loaded only on Woo pages (see inc/woocommerce.php). A restaurant that sells
+ * anything online — gift cards, a cookbook, merchandise, or the whole menu for
+ * collection — ends up with WooCommerce, and Woo ships markup that answers to
+ * none of the theme's tokens: its own greens and blues, its own type scale,
+ * its own button shape. Without this a shop page looks like a different site.
+ *
+ * Everything here is expressed in palette variables, so the shop follows
+ * whichever of the eight palettes is active and inverts correctly in dark mode.
+ */
+
+/* ---------------------------------------------------------------------------
+   Product grid
+   ---------------------------------------------------------------------------
+   Woo sizes its own grid with `auto-fill` against its 1.25em gap. Widening the
+   gap to the theme's spacing scale without setting the tracks explicitly makes
+   it silently drop from three columns to two, so the tracks are set here.
+*/
+
+.woocommerce ul.products {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--wp--preset--spacing--50);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+@media (max-width: 900px) {
+	.woocommerce ul.products {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 560px) {
+	.woocommerce ul.products {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Woo still writes float-based column classes; the grid above owns layout. */
+.woocommerce ul.products li.product {
+	width: auto !important;
+	margin: 0 !important;
+	float: none !important;
+	clear: none !important;
+	text-align: left;
+}
+
+.woocommerce ul.products li.product a img {
+	margin-bottom: var(--wp--preset--spacing--30);
+	border-radius: 6px;
+}
+
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--large);
+	font-weight: 700;
+	line-height: 1.35;
+	padding: 0;
+	margin: 0 0 0.4rem;
+	color: var(--wp--preset--color--contrast);
+}
+
+.woocommerce ul.products li.product .price,
+.woocommerce div.product p.price,
+.woocommerce div.product span.price {
+	font-family: var(--wp--preset--font-family--heading);
+	font-weight: 700;
+	color: var(--wp--preset--color--primary);
+	font-size: var(--wp--preset--font-size--medium);
+}
+
+.woocommerce ul.products li.product .price del {
+	color: var(--wp--preset--color--muted);
+	font-weight: 400;
+	opacity: 1;
+}
+
+/* ---------------------------------------------------------------------------
+   Buttons
+   ---------------------------------------------------------------------------
+   Matched to the theme's element button, including the uppercase tracking, so
+   "Add to cart" and "Book a table" are recognisably the same control.
+*/
+
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit,
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt {
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	line-height: 1;
+	padding: 1.05rem 2.1rem;
+	color: var(--wp--preset--color--base);
+	background-color: var(--wp--preset--color--primary);
+	border: 0;
+	border-radius: 4px;
+	transition: background-color 0.2s ease;
+}
+
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce input.button:hover,
+.woocommerce #respond input#submit:hover,
+.woocommerce a.button.alt:hover,
+.woocommerce button.button.alt:hover,
+.woocommerce input.button.alt:hover {
+	color: var(--wp--preset--color--base);
+	background-color: var(--wp--preset--color--primary-deep);
+}
+
+/* ---------------------------------------------------------------------------
+   Notices
+   --------------------------------------------------------------------------- */
+
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+	background-color: var(--wp--preset--color--surface);
+	border-top: 3px solid var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--contrast);
+	font-size: var(--wp--preset--font-size--small);
+	border-radius: 0 0 4px 4px;
+}
+
+.woocommerce-message::before,
+.woocommerce-info::before,
+.woocommerce-error::before {
+	color: var(--wp--preset--color--primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Single product, cart and checkout
+   --------------------------------------------------------------------------- */
+
+.woocommerce div.product .product_title {
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--heading);
+	line-height: 1.18;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs {
+	padding-left: 0;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs::before {
+	border-bottom-color: var(--wp--preset--color--divider);
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li {
+	background-color: var(--wp--preset--color--surface);
+	border-color: var(--wp--preset--color--divider);
+	border-radius: 4px 4px 0 0;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active {
+	background-color: var(--wp--preset--color--base);
+}
+
+.woocommerce table.shop_table,
+.woocommerce table.shop_table td,
+.woocommerce table.shop_table th {
+	border-color: var(--wp--preset--color--divider);
+}
+
+.woocommerce table.shop_table th {
+	font-family: var(--wp--preset--font-family--heading);
+	font-weight: 700;
+}
+
+.woocommerce-cart .cart-collaterals .cart_totals > h2,
+.woocommerce-checkout h3 {
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--x-large);
+}
+
+.woocommerce form .form-row input.input-text,
+.woocommerce form .form-row textarea,
+.woocommerce form .form-row select,
+.woocommerce-page form .form-row input.input-text {
+	/* Same reason as the reservation form: width plus padding on a content-box
+	   overflows the cell. */
+	box-sizing: border-box;
+	padding: 0.85rem 1rem;
+	font-family: inherit;
+	font-size: var(--wp--preset--font-size--medium);
+	color: var(--wp--preset--color--contrast);
+	background-color: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--divider);
+	border-radius: 4px;
+}
+
+.woocommerce form .form-row label {
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 700;
+}
+
+/* The sale flash is Woo's one piece of strong colour; make it the theme's. */
+.woocommerce span.onsale {
+	background-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	border-radius: 4px;
+	min-height: 0;
+	min-width: 0;
+	padding: 0.4em 0.8em;
+	line-height: 1.2;
+}
+
+/* Woo's star rating uses its own font; only the colour needs saying. */
+.woocommerce .star-rating span::before,
+.woocommerce p.stars a::before {
+	color: var(--wp--preset--color--primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Block-based WooCommerce
+   ---------------------------------------------------------------------------
+   Everything above targets Woo's classic templates, which is what a shortcode
+   or a classic theme produces. On a block theme WooCommerce renders the shop,
+   cart and checkout as BLOCKS instead — `wc-block-product-template`,
+   `wc-block-components-product-price`, and so on — and none of the selectors
+   above match a single element of it.
+
+   That is not a fallback worth skipping: a modern Woo install on this theme
+   IS the block path, and the classic rules are the fallback. Both are here
+   because a site can have either, and a shortcode drops classic markup onto a
+   block-theme page.
+*/
+
+.wc-block-components-product-name,
+.wp-block-post-title a {
+	font-family: var(--wp--preset--font-family--heading);
+	font-weight: 700;
+	color: var(--wp--preset--color--contrast);
+	text-decoration: none;
+}
+
+.wc-block-components-product-price,
+.wc-block-components-product-price__value {
+	font-family: var(--wp--preset--font-family--heading);
+	font-weight: 700;
+	color: var(--wp--preset--color--primary);
+}
+
+.wc-block-components-product-price del,
+.wc-block-components-product-price__regular {
+	color: var(--wp--preset--color--muted);
+	font-weight: 400;
+}
+
+/* Woo's block buttons carry their own background and radius. */
+.wc-block-components-button:not(.is-link),
+.wp-block-woocommerce-cart .wc-block-cart__submit-button,
+.wc-block-components-checkout-place-order-button {
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	line-height: 1;
+	padding: 1.05rem 2.1rem;
+	color: var(--wp--preset--color--base);
+	background-color: var(--wp--preset--color--primary);
+	border: 0;
+	border-radius: 4px;
+	min-height: 0;
+}
+
+.wc-block-components-button:not(.is-link):hover,
+.wp-block-woocommerce-cart .wc-block-cart__submit-button:hover,
+.wc-block-components-checkout-place-order-button:hover {
+	background-color: var(--wp--preset--color--primary-deep);
+	color: var(--wp--preset--color--base);
+}
+
+.wc-block-components-product-image img {
+	border-radius: 6px;
+}
+
+/* Notices, drawers and the mini cart all inherit Woo's own greys. */
+.wc-block-components-notice-banner {
+	border-radius: 4px;
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.wc-block-components-notice-banner.is-info {
+	border-color: var(--wp--preset--color--primary);
+	background-color: var(--wp--preset--color--surface);
+	color: var(--wp--preset--color--contrast);
+}
+
+.wc-block-components-totals-item__value,
+.wc-block-components-totals-footer-item .wc-block-components-totals-item__value {
+	font-family: var(--wp--preset--font-family--heading);
+	font-weight: 700;
+	color: var(--wp--preset--color--primary);
+}
+
+.wc-block-components-text-input input,
+.wc-block-components-select__select {
+	font-family: inherit;
+	color: var(--wp--preset--color--contrast);
+	background-color: var(--wp--preset--color--base);
+	border-color: var(--wp--preset--color--divider);
+	border-radius: 4px;
+}
+
+/* The star rating block. */
+.wc-block-components-product-rating__stars span::before,
+.wc-block-components-review-list-item__rating__stars span::before {
+	color: var(--wp--preset--color--primary);
+}

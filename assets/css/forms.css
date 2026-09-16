@@ -1,0 +1,300 @@
+/*
+ * Forms.
+ *
+ * Two jobs: style Unioncorp's own reservation form, and pull the common form
+ * plugins onto the theme's tokens so a form block does not look like a
+ * different website dropped into the page.
+ *
+ * Everything here is expressed in palette variables, so a form follows
+ * whichever of the eight colour variations a site has active.
+ */
+
+/* ---------------------------------------------------------------------------
+   Shared controls
+   ---------------------------------------------------------------------------
+   One selector list covers Unioncorp's fields and every plugin's, so there is one
+   place to change how an input looks.
+*/
+
+.unioncorp-field__control,
+.wpcf7 input[type="text"],
+.wpcf7 input[type="email"],
+.wpcf7 input[type="tel"],
+.wpcf7 input[type="date"],
+.wpcf7 input[type="time"],
+.wpcf7 input[type="number"],
+.wpcf7 textarea,
+.wpcf7 select,
+.wpforms-field input[type="text"],
+.wpforms-field input[type="email"],
+.wpforms-field input[type="tel"],
+.wpforms-field textarea,
+.wpforms-field select,
+.gform_wrapper input[type="text"],
+.gform_wrapper input[type="email"],
+.gform_wrapper input[type="tel"],
+.gform_wrapper textarea,
+.gform_wrapper select,
+.fluentform input[type="text"],
+.fluentform input[type="email"],
+.fluentform textarea,
+.fluentform select,
+.forminator-input,
+.forminator-textarea,
+.nf-form-content input[type="text"],
+.nf-form-content input[type="email"],
+.nf-form-content textarea {
+	width: 100%;
+	/* Without this every control is 34px wider than the cell it sits in.
+	   `width: 100%` plus 2rem of horizontal padding and a 1px border adds up
+	   to 100% + 34px on a content-box, so the right-hand column of the
+	   reservation grid pushed out past the panel it lives in. Form controls do
+	   not inherit a border-box reset from WordPress or from the theme, so they
+	   have to be told. */
+	box-sizing: border-box;
+	padding: 0.85rem 1rem;
+	font-family: inherit;
+	font-size: var(--wp--preset--font-size--medium);
+	line-height: 1.5;
+	color: var(--wp--preset--color--contrast);
+	background-color: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--divider);
+	border-radius: 4px;
+	box-shadow: none;
+	transition: border-color 0.2s ease;
+	/* Inputs inherit nothing from the page by default and Safari in particular
+	   will impose its own 11px system font without this. */
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.unioncorp-field__control:focus,
+.wpcf7 input:focus,
+.wpcf7 textarea:focus,
+.wpforms-field input:focus,
+.wpforms-field textarea:focus,
+.gform_wrapper input:focus,
+.gform_wrapper textarea:focus,
+.fluentform input:focus,
+.fluentform textarea:focus,
+.forminator-input:focus,
+.forminator-textarea:focus {
+	border-color: var(--wp--preset--color--primary);
+	outline: 3px solid color-mix(in srgb, var(--wp--preset--color--primary) 30%, transparent);
+	outline-offset: 0;
+}
+
+/*
+ * One height for every control in the grid.
+ *
+ * A date or time input renders its own native picker widget and comes out
+ * taller than the text input beside it -- in a two-column reservation grid
+ * that means Date sits a few pixels lower than Phone, and the rows visibly
+ * fail to line up. Setting the same min-height on all of them, rather than
+ * only on date and time as the first version did, is what makes the grid read
+ * as a grid. It also stops iOS collapsing a date field to its text width.
+ */
+.unioncorp-field__control {
+	min-height: 3.1rem;
+}
+
+.unioncorp-field__control[type="date"],
+.unioncorp-field__control[type="time"] {
+	/* Safari ignores the padding on these unless the box is content-box. */
+	line-height: 1.5;
+}
+
+textarea.unioncorp-field__control {
+	min-height: 7rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Labels
+   --------------------------------------------------------------------------- */
+
+.unioncorp-field__label,
+.wpcf7 label,
+.wpforms-field-label,
+.gfield_label,
+.fluentform .ff-el-input--label label {
+	display: block;
+	margin-bottom: 0.45rem;
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	color: var(--wp--preset--color--contrast);
+}
+
+.unioncorp-field__required {
+	color: var(--wp--preset--color--primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Unioncorp's reservation form
+   --------------------------------------------------------------------------- */
+
+.unioncorp-reservation {
+	margin: 0;
+}
+
+/*
+ * The anchor the POST redirect comes back to. It has to be in the flow but
+ * invisible, and it must not add height — an empty div with a margin would
+ * push the panel down by whatever the block gap is.
+ */
+.unioncorp-reservation__anchor {
+	position: relative;
+	top: -90px;
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+
+.unioncorp-reservation__grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1.1rem 1.25rem;
+}
+
+.unioncorp-reservation__grid .unioncorp-field {
+	margin: 0;
+}
+
+/* Name, date/time/people pair up; the message always spans. */
+.unioncorp-reservation__grid .unioncorp-field--message {
+	grid-column: 1 / -1;
+}
+
+@media (max-width: 600px) {
+	.unioncorp-reservation__grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.unioncorp-reservation__actions {
+	margin: 1.6rem 0 0;
+}
+
+.unioncorp-reservation__actions .wp-element-button {
+	cursor: pointer;
+	border: 0;
+}
+
+/* The honeypot. Off-screen rather than display:none, because some bots skip
+   anything that is display:none and fill everything else. */
+.unioncorp-reservation__trap {
+	position: absolute;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+.unioncorp-reservation__notice {
+	margin: 0 0 1.4rem;
+	padding: 0.95rem 1.2rem;
+	border-left: 3px solid currentColor;
+	font-size: var(--wp--preset--font-size--small);
+	line-height: 1.6;
+	background-color: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.unioncorp-reservation__notice.is-ok {
+	color: #1f7a34;
+}
+
+.unioncorp-reservation__notice.is-error {
+	color: var(--wp--preset--color--primary);
+}
+
+/* ---------------------------------------------------------------------------
+   Plugin submit buttons
+   ---------------------------------------------------------------------------
+   Each plugin ships its own button colours. Map them onto the element button
+   so a form's submit matches every other button on the site.
+*/
+
+.wpcf7 input[type="submit"],
+.wpforms-submit,
+.gform_button,
+.fluentform .ff-btn-submit,
+.forminator-button-submit,
+.nf-form-content .submit-wrap input {
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	line-height: 1;
+	padding: 1.05rem 2.1rem;
+	color: var(--wp--preset--color--base);
+	background-color: var(--wp--preset--color--primary);
+	border: 0;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+	width: auto;
+}
+
+.wpcf7 input[type="submit"]:hover,
+.wpforms-submit:hover,
+.gform_button:hover,
+.fluentform .ff-btn-submit:hover,
+.forminator-button-submit:hover {
+	background-color: var(--wp--preset--color--primary-deep);
+}
+
+/* ---------------------------------------------------------------------------
+   Plugin validation messages
+   --------------------------------------------------------------------------- */
+
+.wpcf7-not-valid-tip,
+.wpforms-error,
+.gfield_validation_message,
+.fluentform .error {
+	color: var(--wp--preset--color--primary);
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.wpcf7 .wpcf7-response-output {
+	margin: 1.4rem 0 0;
+	padding: 0.95rem 1.2rem;
+	border: 0;
+	border-left: 3px solid currentColor;
+	font-size: var(--wp--preset--font-size--small);
+}
+
+/* ---------------------------------------------------------------------------
+   Core search and comments
+   --------------------------------------------------------------------------- */
+
+.wp-block-search__input {
+	box-sizing: border-box;
+	padding: 0.85rem 1rem;
+	border: 1px solid var(--wp--preset--color--divider);
+	border-radius: 4px;
+	background-color: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast);
+}
+
+.wp-block-post-comments-form input[type="text"],
+.wp-block-post-comments-form input[type="email"],
+.wp-block-post-comments-form input[type="url"],
+.wp-block-post-comments-form textarea {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.85rem 1rem;
+	font-family: inherit;
+	font-size: var(--wp--preset--font-size--medium);
+	color: var(--wp--preset--color--contrast);
+	background-color: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--divider);
+	border-radius: 4px;
+}
+
+.wp-block-post-comments-form label {
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 700;
+}
