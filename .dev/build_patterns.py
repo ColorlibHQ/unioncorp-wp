@@ -92,7 +92,7 @@ def stat(number, label):
 
 def person(slug, name, role):
     inner = "\n".join([
-        image(slug, "%s, %s" % (name, role), ratio="4/5", rounded="8px"),
+        image(slug, "%s, %s" % (name, role), ratio="1/1", rounded="50%"),
         heading(name, level=3, size="large"),
         paragraph(role, color="muted", size="small"),
     ])
@@ -209,12 +209,13 @@ def build_sidebar():
 # ---------------------------------------------------------------------------
 def build_hero():
     inner = "\n".join([
-        eyebrow("Finance &amp; consultation", align="left"),
-        heading("We're always here to give financial help", level=1, align="left",
+        eyebrow("Finance &amp; consultation", color="overlay"),
+        heading("We're always here to give financial help", level=1, align="center",
                 color="overlay", size="colossal"),
         paragraph("Planning, investment and risk management for businesses that would rather "
-                  "spend their time on the business.", align="left", color="overlay", size="large"),
-        buttons([button("Get started", "#"), button("Our services", "#", style="unioncorp-ghost")]),
+                  "spend their time on the business.", align="center", color="overlay", size="large"),
+        buttons([button("Get started", "#"), button("Our services", "#", style="unioncorp-ghost")],
+                align="center"),
     ])
     write("hero", "Hero", cover(group(inner, layout="constrained", gap="30"), "bg_1",
                                 dim=60, min_height=70, min_height_unit="vh"),
@@ -310,8 +311,9 @@ def build_counters():
 def build_team():
     people = [("staff-1", "Jason Smith", "Managing partner"), ("staff-2", "Jeffrey Rockenson", "Head of investments"),
               ("staff-3", "Maria Alvarez", "Tax director"), ("staff-4", "Peter Nowak", "Risk consultant"),
-              ("staff-5", "Hannah Byrne", "Financial planner"), ("staff-6", "Daniel Osei", "Technology consultant")]
-    rows = [columns([person(*p) for p in people[i:i + 3]], gap="40") for i in (0, 3)]
+              ("staff-5", "Hannah Byrne", "Financial planner"), ("staff-6", "Daniel Osei", "Technology consultant"),
+              ("staff-7", "Claire Dubois", "Insurance specialist"), ("staff-8", "Marcus Hale", "Investment analyst")]
+    rows = [columns([person(*p) for p in people[i:i + 4]], gap="40") for i in (0, 4)]
     inner = section_head("Our team", "The people you will actually speak to") + "\n" + spacer("50") + "\n" + "\n".join(rows)
     write("team", "Team: six profiles",
           group(inner, align="full", background="surface", padding_y="80", layout="constrained", anchor="team"),
