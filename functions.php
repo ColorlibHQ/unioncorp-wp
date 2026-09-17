@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'UNIONCORP_VERSION', '1.1.1' );
+define( 'UNIONCORP_VERSION', '1.1.2' );
 
 /**
  * Theme supports.
