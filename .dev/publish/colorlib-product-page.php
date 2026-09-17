@@ -12,8 +12,8 @@
  * than carried over from Pato's page, and three of Pato's would have been wrong
  * here: Unioncorp styles six form plugins, not eight (no Formidable, no
  * HappyForms); its update check also sends a multisite flag; and its site
- * identifier is an HMAC keyed with the site's own salt, not a plain hash. There
- * is no documentation page yet, so nothing links one.
+ * identifier is an HMAC keyed with the site's own salt, not a plain hash. Both
+ * button rows link the documentation page, a child of this one.
  *
  * Idempotent: creates the page the first time, rewrites it after that, and
  * leaves it a DRAFT. colorlib.com's convention is draft first, publish
@@ -37,6 +37,7 @@ $parent = 5091;
 
 $download = 'https://updates.colorlib.com/download/theme/unioncorp.zip';
 $demo     = 'https://colorlibhub.com/unioncorp/';
+$docs     = 'https://colorlib.com/wp/themes/unioncorp/documentation/';
 
 // ---------------------------------------------------------------------------
 // Images, by file name
@@ -194,8 +195,9 @@ foreach ( $specs as $label => $value ) {
 }
 
 $buttons = '[vc_btn title="Download Unioncorp" style="flat" color="green" link="url:{$download_enc}|title:Download%20Unioncorp|target:_blank" css=".vc_custom_uc{N}a{{$btn_css}}" i_icon_fontawesome="fa fa-download" add_icon="true"]'
-	. '[vc_btn title="Live demo" style="flat" color="grey" link="url:{$demo_enc}|title:Live%20demo|target:_blank" css=".vc_custom_uc{N}b{{$btn_css}}" i_icon_fontawesome="fa fa-eye" add_icon="true"]';
-$buttons = str_replace( array( '{$download_enc}', '{$demo_enc}', '{$btn_css}' ), array( $download_enc, $demo_enc, $btn_css ), $buttons );
+	. '[vc_btn title="Live demo" style="flat" color="grey" link="url:{$demo_enc}|title:Live%20demo|target:_blank" css=".vc_custom_uc{N}b{{$btn_css}}" i_icon_fontawesome="fa fa-eye" add_icon="true"]'
+	. '[vc_btn title="Documentation" style="flat" color="grey" link="url:{$docs_enc}|title:Documentation" css=".vc_custom_uc{N}c{{$btn_css}}" i_icon_fontawesome="fa fa-book" add_icon="true"]';
+$buttons = str_replace( array( '{$download_enc}', '{$demo_enc}', '{$docs_enc}', '{$btn_css}' ), array( $download_enc, $demo_enc, rawurlencode( $docs ), $btn_css ), $buttons );
 $top_buttons    = str_replace( '{N}', '004', $buttons );
 $bottom_buttons = str_replace( '{N}', '083', $buttons );
 
@@ -321,4 +323,4 @@ echo 'template: ' . get_post_meta( $page_id, '_wp_page_template', true ) . ', vc
 echo 'section images: ' . substr_count( $saved, '[vcex_image' ) . "\n";
 echo 'buttons: ' . substr_count( $saved, '[vc_btn' ) . "\n";
 echo 'unbalanced rows: ' . ( substr_count( $saved, '[vc_row' ) - substr_count( $saved, '[/vc_row]' ) ) . "\n";
-echo 'documentation links: ' . substr_count( $saved, 'documentation' ) . " (must be 0 — there is no docs page)\n";
+echo 'documentation buttons: ' . substr_count( $saved, 'title="Documentation"' ) . " (must be 2, one per button row)\n";
