@@ -75,14 +75,14 @@ function unioncorp_scheme_assets() {
 	}
 
 	wp_enqueue_style(
-		'unioncorp-scheme',
+		'unioncorp-wp-unioncorp-scheme',
 		get_template_directory_uri() . '/assets/css/scheme.css',
-		array( 'unioncorp-style' ),
+		array( 'unioncorp-wp-unioncorp-style' ),
 		UNIONCORP_VERSION
 	);
 
 	wp_enqueue_script(
-		'unioncorp-scheme-toggle',
+		'unioncorp-wp-unioncorp-scheme-toggle',
 		get_template_directory_uri() . '/assets/js/scheme-toggle.js',
 		array(),
 		UNIONCORP_VERSION,
