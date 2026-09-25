@@ -54,9 +54,9 @@ function unioncorp_woocommerce_styles() {
 	}
 
 	wp_enqueue_style(
-		'unioncorp-wp-unioncorp-woocommerce',
+		'unioncorp-woocommerce',
 		get_template_directory_uri() . '/assets/css/woocommerce.css',
-		array( 'unioncorp-wp-unioncorp-style' ),
+		array( 'unioncorp-style' ),
 		UNIONCORP_VERSION
 	);
 }

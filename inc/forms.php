@@ -55,9 +55,9 @@ function unioncorp_enqueue_form_styles() {
 	// Unioncorp's own enquiry form is always a possibility, so the stylesheet
 	// is not conditional on a plugin being present — it carries both.
 	wp_enqueue_style(
-		'unioncorp-wp-unioncorp-forms',
+		'unioncorp-forms',
 		get_template_directory_uri() . '/assets/css/forms.css',
-		array( 'unioncorp-wp-unioncorp-style' ),
+		array( 'unioncorp-style' ),
 		UNIONCORP_VERSION
 	);
 }

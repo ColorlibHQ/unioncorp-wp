@@ -194,9 +194,9 @@ foreach ( $specs as $label => $value ) {
 		. esc_html( $label ) . '</th><td style="padding:10px 0;border-bottom:1px solid #e3e8f2;">' . $value . '</td></tr>';
 }
 
-$buttons = '[vc_btn title="Download Unioncorp" style="flat" color="green" link="url:{$download_enc}|title:Download%20Unioncorp|target:_blank" css=".vc_custom_uc{N}a{{$btn_css}}" i_icon_fontawesome="fa-solid fa-download" add_icon="true"]'
-	. '[vc_btn title="Live demo" style="flat" color="grey" link="url:{$demo_enc}|title:Live%20demo|target:_blank" css=".vc_custom_uc{N}b{{$btn_css}}" i_icon_fontawesome="fa-regular fa-eye" add_icon="true"]'
-	. '[vc_btn title="Documentation" style="flat" color="grey" link="url:{$docs_enc}|title:Documentation" css=".vc_custom_uc{N}c{{$btn_css}}" i_icon_fontawesome="fa-solid fa-book" add_icon="true"]';
+$buttons = '[vc_btn title="Download Unioncorp" style="flat" color="green" link="url:{$download_enc}|title:Download%20Unioncorp|target:_blank" css=".vc_custom_uc{N}a{{$btn_css}}" i_icon_fontawesome="fa fa-download" add_icon="true"]'
+	. '[vc_btn title="Live demo" style="flat" color="grey" link="url:{$demo_enc}|title:Live%20demo|target:_blank" css=".vc_custom_uc{N}b{{$btn_css}}" i_icon_fontawesome="fa fa-eye" add_icon="true"]'
+	. '[vc_btn title="Documentation" style="flat" color="grey" link="url:{$docs_enc}|title:Documentation" css=".vc_custom_uc{N}c{{$btn_css}}" i_icon_fontawesome="fa fa-book" add_icon="true"]';
 $buttons = str_replace( array( '{$download_enc}', '{$demo_enc}', '{$docs_enc}', '{$btn_css}' ), array( $download_enc, $demo_enc, rawurlencode( $docs ), $btn_css ), $buttons );
 $top_buttons    = str_replace( '{N}', '004', $buttons );
 $bottom_buttons = str_replace( '{N}', '083', $buttons );

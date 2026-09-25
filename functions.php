@@ -49,7 +49,7 @@ add_action( 'after_setup_theme', 'unioncorp_setup' );
  * Front-end styles.
  */
 function unioncorp_enqueue_styles() {
-	wp_enqueue_style( 'unioncorp-wp-unioncorp-style', get_stylesheet_uri(), array(), UNIONCORP_VERSION );
+	wp_enqueue_style( 'unioncorp-style', get_stylesheet_uri(), array(), UNIONCORP_VERSION );
 }
 add_action( 'wp_enqueue_scripts', 'unioncorp_enqueue_styles' );
 
@@ -106,7 +106,7 @@ add_action( 'init', 'unioncorp_register_block_styles' );
  */
 function unioncorp_enqueue_interactions() {
 	wp_enqueue_script(
-		'unioncorp-wp-unioncorp-interactions',
+		'unioncorp-interactions',
 		get_template_directory_uri() . '/assets/js/interactions.js',
 		array(),
 		UNIONCORP_VERSION,
