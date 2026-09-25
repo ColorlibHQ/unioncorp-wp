@@ -4,7 +4,7 @@ Contributors: colorlib
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: business, portfolio, blog, full-site-editing, block-patterns, block-styles, template-editing, wide-blocks, accessibility-ready, translation-ready, custom-colors, custom-menu, custom-logo, featured-images, threaded-comments, one-column, two-columns, right-sidebar, rtl-language-support, sticky-post, theme-options
@@ -97,6 +97,10 @@ License: Unsplash License, https://unsplash.com/license
 Source: https://unsplash.com/
 
 == Changelog ==
+
+
+= 1.1.3 =
+* Update requests no longer name the site. WordPress's default User-Agent carries the site address; the update check and core's package download to updates.colorlib.com now send only the theme and WordPress versions, so the one-way site identifier is the only thing that tells installs apart.
 
 = 1.1.2 =
 * Fixed: in the editor, every icon tile on the service, about and testimonial cards showed "Type / to choose a block" instead of its icon, and the icons beside contact details were missing. Icons are now a class on the block, so they show while editing, and changing one is an edit to Advanced → Additional CSS class(es). Pages built by earlier versions keep rendering exactly as before.

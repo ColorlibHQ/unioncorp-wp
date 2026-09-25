@@ -2,7 +2,7 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Unioncorp 1.1.2\n"
+"Project-Id-Version: Unioncorp 1.1.3\n"
 "Report-Msgid-Bugs-To: https://colorlibsupport.com/\n"
 "Last-Translator: Colorlib <hello@colorlib.com>\n"
 "Language-Team: Colorlib <hello@colorlib.com>\n"
